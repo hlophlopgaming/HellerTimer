@@ -1,1 +1,82 @@
-{"version":1,"measurements":[]}
+{
+  "version": 1,
+  "host": "coolpc-b450ms2h",
+  "os": "Linux-6.18.49-2-lts-x86_64-with-glibc2.44",
+  "cpu": "",
+  "ram_bytes": 33591033856,
+  "timestamp": 1792429376.993639,
+  "measurements": [
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 17766604.8,
+      "rss_bytes": 28501333.333333332,
+      "cpu_percent": 0.0,
+      "wakeups_per_second": 2.266068620641275,
+      "processes": 2,
+      "threads": 10,
+      "duration_seconds": 30.00791740400018,
+      "application": "HellerTimer/software",
+      "scenario": "idle-visible"
+    },
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 54384025.6,
+      "rss_bytes": 195119377.06666666,
+      "cpu_percent": 0.0,
+      "wakeups_per_second": 2.032680209196446,
+      "processes": 2,
+      "threads": 24,
+      "duration_seconds": 30.009639354000683,
+      "application": "HellerTimer/femtovg",
+      "scenario": "idle-visible"
+    },
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 18098483.2,
+      "rss_bytes": 28907929.6,
+      "cpu_percent": 0.0666484802603128,
+      "wakeups_per_second": 7.497954029285194,
+      "processes": 2,
+      "threads": 10,
+      "duration_seconds": 30.008186115999706,
+      "application": "HellerTimer/software",
+      "scenario": "running-static"
+    },
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 52038963.2,
+      "rss_bytes": 192699869.86666667,
+      "cpu_percent": 0.09996801944083368,
+      "wakeups_per_second": 12.86255183472059,
+      "processes": 2,
+      "threads": 22,
+      "duration_seconds": 30.00959723699998,
+      "application": "HellerTimer/femtovg",
+      "scenario": "running-static"
+    },
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 16717824,
+      "rss_bytes": 27139276.8,
+      "cpu_percent": 0.0,
+      "wakeups_per_second": 2.0323896811196716,
+      "processes": 2,
+      "threads": 12,
+      "duration_seconds": 30.013929201999417,
+      "application": "HellerTimer/software",
+      "scenario": "mini"
+    },
+    {
+      "memory_kind": "PSS",
+      "private_bytes": 316158566.4,
+      "rss_bytes": 857577881.6,
+      "cpu_percent": 1.0656752589914786,
+      "wakeups_per_second": 154.55621490560787,
+      "processes": 8,
+      "threads": 107,
+      "duration_seconds": 30.027909280997847,
+      "application": "Pomatez",
+      "scenario": "idle-visible"
+    }
+  ]
+}

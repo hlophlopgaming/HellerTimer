@@ -5,17 +5,42 @@ import json
 import shutil
 from pathlib import Path
 
+BG = "#111d25"
+FG = "#e3e4e5"
+MUTED = "#a7abae"
+BLUE = "#0098f7"
+RED = "#e04a5f"
+
 
 def report(data):
     rows = data["measurements"]
     lines = ["| Application | Scenario | Private MiB | CPU % |", "|---|---|---:|---:|"]
+    max_mib = max((r["private_bytes"] / 1048576 for r in rows), default=1)
+    bar_w = 560.0
+    label_w = 330.0
+    row_h = 44
+    top = 40
     bars = []
     for i, r in enumerate(rows):
         mib = r["private_bytes"] / 1048576
-        lines.append(f'| {r["application"]} | {r["scenario"]} | {mib:.1f} | {r["cpu_percent"]:.2f} |')
+        cpu = r["cpu_percent"]
+        lines.append(f'| {r["application"]} | {r["scenario"]} | {mib:.1f} | {cpu:.2f} |')
         label = html.escape(f'{r["application"]} · {r["scenario"]}')
-        bars.append(f'<text x="8" y="{i*40+18}" fill="#a7abae">{label}</text><rect x="350" y="{i*40+4}" width="{min(mib,600)}" height="20" fill="#0098f7"/><text x="{360+min(mib,600)}" y="{i*40+18}" fill="#e3e4e5">{mib:.1f} MiB</text>')
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="{max(40,len(rows)*40)}"><rect width="100%" height="100%" fill="#111d25"/>{"".join(bars)}</svg>'
+        width = max(2.0, mib / max_mib * bar_w)
+        color = RED if "Pomatez" in r["application"] else BLUE
+        y = top + i * row_h
+        bars.append(
+            f'<text x="8" y="{y + 28}" fill="{MUTED}" font-size="14">{label}</text>'
+            f'<rect x="{label_w}" y="{y + 8}" width="{width:.1f}" height="22" rx="4" fill="{color}"/>'
+            f'<text x="{label_w + width + 8}" y="{y + 25}" fill="{FG}" font-size="14">{mib:.1f} MiB · {cpu:.2f}% CPU</text>'
+        )
+    height = top + max(row_h, len(rows) * row_h) + 8
+    svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="{height}">'
+        f'<rect width="100%" height="100%" fill="{BG}"/>'
+        f'<text x="8" y="22" fill="{FG}" font-size="15" font-weight="600">Private memory by application (lower is better)</text>'
+        f'{"".join(bars)}</svg>'
+    )
     return "\n".join(lines) + "\n", svg
 
 
@@ -31,6 +56,7 @@ def main():
     if args.publish:
         root = Path(__file__).resolve().parents[1]
         shutil.copyfile(args.result, root / "site/bench/latest.json")
+        shutil.copyfile(args.result.with_suffix(".svg"), root / "site/bench/benchmark.svg")
         readme = root / "README.md"
         text = readme.read_text()
         start, tail = text.split("<!-- bench:start -->", 1)
