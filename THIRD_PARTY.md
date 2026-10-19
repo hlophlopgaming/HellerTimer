@@ -16,4 +16,4 @@ HellerTimer source code is MIT licensed. Dependencies retain their own licenses.
 
 Use `cargo tree --locked` for exact transitive versions in Cargo.lock. No additional third-party assets are embedded in the site.
 
-The HellerTimer hourglass icon (`assets/icon.png`, copied to the site and Android resources) is original generated project branding, not a Pomatez asset. Its concept, generation method and exact prompt are recorded in [assets/branding/README.md](assets/branding/README.md).
+The HellerTimer hourglass icon (`assets/icon.png`, copied to the site and Android resources) and its monochrome tray variant (`assets/tray-icon.png`) are original generated project branding, not Pomatez assets. Their concept, generation method and exact prompts are recorded in [assets/branding/README.md](assets/branding/README.md).
