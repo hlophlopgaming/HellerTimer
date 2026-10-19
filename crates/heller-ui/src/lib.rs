@@ -36,6 +36,11 @@ pub trait Platform {
     fn utc_offset_seconds(&self) -> i32 {
         0
     }
+    /// Wall-clock time source. `SystemTime::now()` is unsupported on
+    /// `wasm32-unknown-unknown`, so platforms override this with a JS clock.
+    fn now(&self) -> SystemTime {
+        SystemTime::now()
+    }
     fn request_notifications(&self) {}
 }
 /// UI languages, in toggle order. Codes match the bundled `lang/*.po` files.
@@ -366,7 +371,7 @@ impl App {
         Ok(app)
     }
     pub fn dispatch(self: &Rc<Self>, input: Input) {
-        let effects = self.core.borrow_mut().handle(input, SystemTime::now());
+        let effects = self.core.borrow_mut().handle(input, self.platform.now());
         for e in effects {
             let message = match e {
                 Effect::Warning(_) => self.window.get_message_warning(),
@@ -551,7 +556,7 @@ impl App {
     fn refresh(&self) {
         let c = self.core.borrow();
         let w = &self.window;
-        let now = SystemTime::now();
+        let now = self.platform.now();
         let settings = &c.settings;
         set_changed!(w, get_updates, set_updates, settings.check_updates);
         let mut b = self.buffer.borrow_mut();
@@ -668,7 +673,7 @@ impl App {
     }
     fn arm(self: &Rc<Self>) {
         self.timer.stop();
-        let now = SystemTime::now();
+        let now = self.platform.now();
         if let Some(next) = self.core.borrow().next_wakeup(now) {
             let weak = Rc::downgrade(self);
             self.timer.start(

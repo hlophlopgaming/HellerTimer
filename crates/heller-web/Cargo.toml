@@ -9,6 +9,7 @@ crate-type = ["cdylib", "rlib"]
 heller-ui = { path = "../heller-ui" }
 slint = { workspace = true, features = ["backend-winit", "renderer-femtovg"] }
 wasm-bindgen = { version = "0.2", default-features = false, features = ["std"] }
+console_error_panic_hook = { version = "0.1", default-features = false }
 web-sys = { version = "0.3", default-features = false, features = ["Window", "Storage", "Notification", "NotificationOptions", "console", "Document", "Event", "EventTarget", "HtmlAudioElement", "HtmlMediaElement"] }
 
 js-sys = { version = "0.3", default-features = false, features = ["std"] }

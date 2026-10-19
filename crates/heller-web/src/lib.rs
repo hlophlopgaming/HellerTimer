@@ -31,6 +31,9 @@ mod web {
         fn utc_offset_seconds(&self) -> i32 {
             (-js_sys::Date::new_0().get_timezone_offset() * 60.0) as i32
         }
+        fn now(&self) -> std::time::SystemTime {
+            std::time::UNIX_EPOCH + std::time::Duration::from_millis(js_sys::Date::now() as u64)
+        }
         fn effect(&self, _e: heller_core::Effect, s: &heller_core::Settings, message: &str) {
             if s.sound_enabled {
                 if let Some(audio) = &self.audio {
@@ -54,6 +57,7 @@ mod web {
     }
     #[wasm_bindgen(start)]
     pub fn start() -> Result<(), JsValue> {
+        console_error_panic_hook::set_once();
         let audio = web_sys::HtmlAudioElement::new_with_src("bell.wav").ok();
         if let (Some(doc), Some(audio)) =
             (web_sys::window().and_then(|w| w.document()), audio.clone())
