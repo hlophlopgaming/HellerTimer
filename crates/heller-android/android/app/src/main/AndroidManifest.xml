@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
-  <application android:label="HellerTimer" android:theme="@android:style/Theme.Material.NoActionBar" android:hasCode="true" android:allowBackup="false">
+  <application android:icon="@drawable/hellertimer" android:label="HellerTimer" android:theme="@android:style/Theme.Material.NoActionBar" android:hasCode="true" android:allowBackup="false">
     <activity android:name=".HellerActivity" android:exported="true" android:configChanges="orientation|keyboardHidden|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
       <meta-data android:name="android.app.lib_name" android:value="heller_android"/>
       <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>

@@ -10,6 +10,7 @@ A native Pomodoro timer written in **Rust + Slint**, inspired by [Pomatez](https
 [Download releases](https://github.com/hlophlopgaming/HellerTimer/releases) · [Website & web demo](https://hlophlopgaming.github.io/HellerTimer/) · [Build checks](https://github.com/hlophlopgaming/HellerTimer/actions)
 
 <p align="center"><img src="site/screenshot.png" width="360" alt="HellerTimer running on Linux"></p>
+<p align="center"><img src="site/mini.png" width="260" alt="Compact mini window with timer, pause and expand controls"></p>
 
 ## Features
 
@@ -17,7 +18,8 @@ A native Pomodoro timer written in **Rust + Slint**, inspired by [Pomatez](https
 - Strict mode, automatic focus starts, optional fullscreen breaks and extra advance notifications.
 - Absolute SystemTime deadlines: missed transitions are replayed after sleep, with only the final transition announced.
 - Task lists with titles, descriptions, completion, reordering and movement between lists. Press Enter to save text edits; arrows reorder, and → moves to the next list. Only empty lists can be deleted.
-- English and Russian interfaces, bundled Noto Sans with Cyrillic, Pomatez light/dark colors and original sounds/voice recordings.
+- English and Russian interfaces, bundled Noto Sans with Cyrillic, five themes (Light, Dark, Paper, Forest, Midnight) and original Pomatez sounds/voice recordings.
+- An original hourglass/loop icon inspired by Joseph Heller’s *Catch-22*.
 - Desktop tray with progress, compact mini window, always-on-top, native/custom title bar, close/minimize to tray, single instance and autostart.
 - Optional update check 30 seconds after startup, with a five-second request timeout. No network request is needed to start or use the timer.
 - Atomic, versioned JSON storage and a 500 ms save debounce. A damaged desktop file is backed up as `data.json.bak`.
@@ -74,7 +76,7 @@ cd crates/heller-web
 trunk serve
 ```
 
-Browser notifications require permission and a secure origin (HTTPS or localhost); sound needs a user interaction. Hidden tabs may delay notifications due to browser throttling, while remaining time is recomputed from deadlines on return. Browser storage can be unavailable in private/locked-down sessions; storage errors are logged. The PWA manifest enables standalone installation; offline caching is not implemented.
+Browser notifications require permission and a secure origin (HTTPS or localhost); sound needs a user interaction. Hidden tabs may delay notifications due to browser throttling, while remaining time is recomputed from deadlines on return. Theme selection is saved locally. Version-1 dark/light settings migrate to version 2 without changing tasks or timer configuration. Browser storage can be unavailable in private/locked-down sessions; storage errors are logged. The PWA manifest enables standalone installation; offline caching is not implemented.
 
 Android: Java 17, Android SDK platform 35, NDK and Gradle 8.11.1 are required. Install `cargo-ndk`, add the three Rust Android targets, then follow `.github/workflows/release.yml` to generate JNI libraries and run `gradle assembleDebug` in `crates/heller-android/android`. Exact alarm denial falls back to an inexact alarm; notification permission is requested on Android 13+. The Java receiver can announce the next deadline without the UI process. **Continuing multiple phases after process death is not implemented:** reopen the app to continue. Android builds and IME need a real-device test.
 
@@ -90,6 +92,16 @@ cargo check -p heller-android --target aarch64-linux-android
 python bench/bench.py --help
 python -m unittest discover -s bench
 ```
+
+To exercise actual Slint controls and window sizes in a graphical session:
+
+```
+cargo run -p heller-desktop --example ui-smoke
+cargo run -p heller-desktop --example ui-smoke -- --start-mini
+cargo run -p heller-desktop --example ui-smoke -- --frameless
+```
+
+These scenarios send pointer events, exercise every mini-window entry point and restoration (including hidden windows), timer controls, tasks, configuration, all themes, Russian and persistence. They use an in-memory platform and never modify your user data. Raw RGBA screenshots and dimensions go to `$HELLER_SCREENSHOT_DIR` or a temporary `hellertimer-ui-smoke` directory. CI runs the same scenarios under Xvfb.
 
 The last Android command requires an SDK/JDK even for `cargo check`. Long packaging and release jobs run in CI. Push a `v*` tag to build release packages; the workflow publishes a prerelease only when all platform jobs succeed. GitHub Pages deploys from `main` using Actions. No PR is required.
 

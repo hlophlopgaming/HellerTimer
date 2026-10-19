@@ -3,7 +3,7 @@
 HellerTimer source code is MIT licensed. Dependencies retain their own licenses.
 
 * **Slint 1.18.1** — https://slint.dev — used under the Slint Royalty-free License 2.0, not the alternative GPL license. Full terms: [Slint license](assets/licenses/Slint-Royalty-free-2.0.md). The AboutSlint widget is available in Settings; attribution is included beside downloads and in README. Built-in tray and accessibility support bring their own transitive dependencies.
-* **Pomatez** — Copyright (c) 2024 Roldan Montilla Jr — https://github.com/zidoro/pomatez — MIT. `assets/icon.png` from `app/electron/src/assets/logo-dark256x256.png`; `assets/sounds/bell.wav` from `app/renderer/src/assets/audios/notification-bell.wav`; `assets/sounds/{focus-finished,break-finished,special-break-started,sixty-seconds-left,thirty-seconds-left}.wav` from the matching files under `app/renderer/src/assets/audios/`; palette values in `theme.slint` from `app/renderer/src/styles/themes.ts`. Full notice: [Pomatez MIT](assets/licenses/Pomatez-MIT.txt).
+* **Pomatez** — Copyright (c) 2024 Roldan Montilla Jr — https://github.com/zidoro/pomatez — MIT. `assets/sounds/bell.wav` from `app/renderer/src/assets/audios/notification-bell.wav`; `assets/sounds/{focus-finished,break-finished,special-break-started,sixty-seconds-left,thirty-seconds-left}.wav` from the matching files under `app/renderer/src/assets/audios/`; palette values in `theme.slint` from `app/renderer/src/styles/themes.ts`. Full notice: [Pomatez MIT](assets/licenses/Pomatez-MIT.txt).
 * **Noto Sans Regular** — Copyright Google LLC, SIL Open Font License 1.1. `assets/fonts/NotoSans-Regular.ttf` from https://github.com/notofonts/noto-fonts/tree/main/hinted/ttf/NotoSans. Used by Pomatez; includes Cyrillic. Full notice: [OFL](assets/licenses/Noto-OFL.txt).
 * **serde / serde_json** — MIT OR Apache-2.0; versioned configuration and task serialization.
 * **log** — MIT OR Apache-2.0; recoverable error reporting.
@@ -15,3 +15,5 @@ HellerTimer source code is MIT licensed. Dependencies retain their own licenses.
 * **jni** — MIT OR Apache-2.0; Android Java storage and alarm bridge.
 
 Use `cargo tree --locked` for exact transitive versions in Cargo.lock. No additional third-party assets are embedded in the site.
+
+The HellerTimer hourglass icon (`assets/icon.png`, copied to the site and Android resources) is original generated project branding, not a Pomatez asset. Its concept, generation method and exact prompt are recorded in [assets/branding/README.md](assets/branding/README.md).
