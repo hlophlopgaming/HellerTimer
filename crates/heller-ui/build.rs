@@ -3,7 +3,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::env::var_os("OUT_DIR").ok_or("Cargo did not supply OUT_DIR")?,
     )
     .join("translations");
-    for lang in ["en", "ru"] {
+    for lang in ["en", "ru", "de", "es", "fr", "pt", "it", "zh", "ja"] {
         let dest = root.join(lang).join("LC_MESSAGES");
         std::fs::create_dir_all(&dest)?;
         std::fs::copy(format!("lang/{lang}.po"), dest.join("heller-ui.po"))?;

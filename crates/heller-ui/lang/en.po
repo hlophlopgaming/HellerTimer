@@ -63,8 +63,8 @@ msgstr "HH:MM"
 msgid "Hide"
 msgstr "Hide"
 
-msgid "Language · English / Русский"
-msgstr "Language · English / Русский"
+msgid "Language"
+msgstr "Language"
 
 msgid "Long break"
 msgstr "Long break"

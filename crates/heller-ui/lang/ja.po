@@ -1,0 +1,217 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ja\n"
+
+msgid "A little time. A little focus."
+msgstr "少しの時間。少しの集中。"
+
+msgid "About"
+msgstr "このアプリについて"
+
+msgid "About HellerTimer"
+msgstr "HellerTimer について"
+
+msgid "Add"
+msgstr "追加"
+
+msgid "Always on top"
+msgstr "常に手前に表示"
+
+msgid "An update is available on GitHub"
+msgstr "GitHub でアップデートがあります"
+
+msgid "Auto-start focus"
+msgstr "集中を自動開始"
+
+msgid "Check for updates on startup"
+msgstr "起動時に更新を確認"
+
+msgid "Close to tray"
+msgstr "トレイに閉じる"
+
+msgid "Config"
+msgstr "構成"
+
+msgid "Dark theme"
+msgstr "ダークテーマ"
+
+msgid "Delete empty list"
+msgstr "空のリストを削除"
+
+msgid "Description · Enter to save"
+msgstr "説明 · Enter で保存"
+
+msgid "Enter saves edits · → moves to next list"
+msgstr "Enter で保存 · → 次のリストへ"
+
+msgid "Expand"
+msgstr "拡大"
+
+msgid "Extra"
+msgstr "詳細"
+
+msgid "Focus minutes"
+msgstr "集中の分数"
+
+msgid "Fullscreen breaks"
+msgstr "全画面休憩"
+
+msgid "HH:MM"
+msgstr "時:分"
+
+msgid "Hide"
+msgstr "隠す"
+
+msgid "Language"
+msgstr "言語"
+
+msgid "Long break"
+msgstr "長い休憩"
+
+msgid "Long break minutes"
+msgstr "長い休憩の分数"
+
+msgid "Mini"
+msgstr "ミニ"
+
+msgid "Mini window"
+msgstr "ミニウィンドウ"
+
+msgid "Minimize to tray"
+msgstr "トレイに最小化"
+
+msgid "Minutes"
+msgstr "分"
+
+msgid "Native title bar"
+msgstr "ネイティブタイトルバー"
+
+msgid "New list"
+msgstr "新しいリスト"
+
+msgid "Normal"
+msgstr "通常"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Off"
+msgstr "オフ"
+
+msgid "On"
+msgstr "オン"
+
+msgid "One thing at a time."
+msgstr "一度にひとつ。"
+
+msgid "Open at login"
+msgstr "ログイン時に起動"
+
+msgid "Pause"
+msgstr "一時停止"
+
+msgid "Progress animation"
+msgstr "進行アニメーション"
+
+msgid "Quit"
+msgstr "終了"
+
+msgid "Reset"
+msgstr "リセット"
+
+msgid "Restore defaults"
+msgstr "デフォルトに戻す"
+
+msgid "Round"
+msgstr "ラウンド"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Sessions per round"
+msgstr "ラウンドごとのセッション数"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Short break"
+msgstr "短い休憩"
+
+msgid "Short break minutes"
+msgstr "短い休憩の分数"
+
+msgid "Show / Hide"
+msgstr "表示 / 非表示"
+
+msgid "Skip"
+msgstr "スキップ"
+
+msgid "Sound"
+msgstr "サウンド"
+
+msgid "Source & releases"
+msgstr "ソースとリリース"
+
+msgid "Special break"
+msgstr "特別休憩"
+
+msgid "Special breaks · local time"
+msgstr "特別休憩 · 現地時間"
+
+msgid "Start"
+msgstr "開始"
+
+msgid "Start / Pause"
+msgstr "開始 / 一時停止"
+
+msgid "Stay focused"
+msgstr "集中を保つ"
+
+msgid "Strict mode"
+msgstr "ストリクトモード"
+
+msgid "Tasks"
+msgstr "タスク"
+
+msgid "Time for a break"
+msgstr "休憩の時間"
+
+msgid "Time to focus"
+msgstr "集中の時間"
+
+msgid "Timer"
+msgstr "タイマー"
+
+msgid "Use HH:MM and 1–120 minutes"
+msgstr "時:分と 1～120 分を使用"
+
+msgid "Voice assistance"
+msgstr "音声アシスト"
+
+msgid "What needs doing?"
+msgstr "何をすべき？"
+
+msgid "Your rhythm"
+msgstr "あなたのリズム"
+
+msgid "Your timer is about to finish"
+msgstr "タイマーがまもなく終了します"
+
+msgid "Theme"
+msgstr "テーマ"
+
+msgid "Light"
+msgstr "ライト"
+
+msgid "Dark"
+msgstr "ダーク"
+
+msgid "Paper"
+msgstr "ペーパー"
+
+msgid "Forest"
+msgstr "フォレスト"
+
+msgid "Midnight"
+msgstr "ミッドナイト"

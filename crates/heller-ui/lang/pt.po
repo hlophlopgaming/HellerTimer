@@ -1,0 +1,217 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt\n"
+
+msgid "A little time. A little focus."
+msgstr "Um pouco de tempo. Um pouco de foco."
+
+msgid "About"
+msgstr "Sobre"
+
+msgid "About HellerTimer"
+msgstr "Sobre o HellerTimer"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Always on top"
+msgstr "Sempre no topo"
+
+msgid "An update is available on GitHub"
+msgstr "Há uma atualização disponível no GitHub"
+
+msgid "Auto-start focus"
+msgstr "Início automático do foco"
+
+msgid "Check for updates on startup"
+msgstr "Verificar atualizações ao iniciar"
+
+msgid "Close to tray"
+msgstr "Fechar na bandeja"
+
+msgid "Config"
+msgstr "Configuração"
+
+msgid "Dark theme"
+msgstr "Tema escuro"
+
+msgid "Delete empty list"
+msgstr "Excluir lista vazia"
+
+msgid "Description · Enter to save"
+msgstr "Descrição · Enter para salvar"
+
+msgid "Enter saves edits · → moves to next list"
+msgstr "Enter salva · → próxima lista"
+
+msgid "Expand"
+msgstr "Expandir"
+
+msgid "Extra"
+msgstr "Extra"
+
+msgid "Focus minutes"
+msgstr "Minutos de foco"
+
+msgid "Fullscreen breaks"
+msgstr "Pausas em tela cheia"
+
+msgid "HH:MM"
+msgstr "HH:MM"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Long break"
+msgstr "Pausa longa"
+
+msgid "Long break minutes"
+msgstr "Minutos de pausa longa"
+
+msgid "Mini"
+msgstr "Mini"
+
+msgid "Mini window"
+msgstr "Mini janela"
+
+msgid "Minimize to tray"
+msgstr "Minimizar na bandeja"
+
+msgid "Minutes"
+msgstr "Minutos"
+
+msgid "Native title bar"
+msgstr "Barra de título nativa"
+
+msgid "New list"
+msgstr "Nova lista"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Notifications"
+msgstr "Notificações"
+
+msgid "Off"
+msgstr "Desligado"
+
+msgid "On"
+msgstr "Ligado"
+
+msgid "One thing at a time."
+msgstr "Uma coisa de cada vez."
+
+msgid "Open at login"
+msgstr "Abrir ao iniciar sessão"
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Progress animation"
+msgstr "Animação de progresso"
+
+msgid "Quit"
+msgstr "Sair"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Restore defaults"
+msgstr "Restaurar padrões"
+
+msgid "Round"
+msgstr "Rodada"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Sessions per round"
+msgstr "Sessões por rodada"
+
+msgid "Settings"
+msgstr "Configurações"
+
+msgid "Short break"
+msgstr "Pausa curta"
+
+msgid "Short break minutes"
+msgstr "Minutos de pausa curta"
+
+msgid "Show / Hide"
+msgstr "Mostrar / Ocultar"
+
+msgid "Skip"
+msgstr "Pular"
+
+msgid "Sound"
+msgstr "Som"
+
+msgid "Source & releases"
+msgstr "Código e versões"
+
+msgid "Special break"
+msgstr "Pausa especial"
+
+msgid "Special breaks · local time"
+msgstr "Pausas especiais · hora local"
+
+msgid "Start"
+msgstr "Iniciar"
+
+msgid "Start / Pause"
+msgstr "Iniciar / Pausar"
+
+msgid "Stay focused"
+msgstr "Mantenha o foco"
+
+msgid "Strict mode"
+msgstr "Modo estrito"
+
+msgid "Tasks"
+msgstr "Tarefas"
+
+msgid "Time for a break"
+msgstr "Hora de uma pausa"
+
+msgid "Time to focus"
+msgstr "Hora de focar"
+
+msgid "Timer"
+msgstr "Temporizador"
+
+msgid "Use HH:MM and 1–120 minutes"
+msgstr "Use HH:MM e 1–120 minutos"
+
+msgid "Voice assistance"
+msgstr "Assistência por voz"
+
+msgid "What needs doing?"
+msgstr "O que precisa ser feito?"
+
+msgid "Your rhythm"
+msgstr "Seu ritmo"
+
+msgid "Your timer is about to finish"
+msgstr "Seu temporizador está quase terminando"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Light"
+msgstr "Claro"
+
+msgid "Dark"
+msgstr "Escuro"
+
+msgid "Paper"
+msgstr "Papel"
+
+msgid "Forest"
+msgstr "Floresta"
+
+msgid "Midnight"
+msgstr "Meia-noite"

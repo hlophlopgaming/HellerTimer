@@ -58,6 +58,8 @@ export component MainWindow inherits Window {
     in-out property <int> list-index: 0;
     in-out property <string> list-title;
     in-out property <string> time-text: "25:00";
+    in-out property <string> language-label: "English";
+    in-out property <string> version: "";
     in-out property <[TaskRow]> tasks;
     in-out property <float> progress: 0;
     in-out property <bool> break-overlay: false;
@@ -201,9 +203,9 @@ export component MainWindow inherits Window {
             if root.cap-login: Toggle { text: @tr("Open at login"); checked: root.login; toggled => { root.setting("login"); } }
             if root.cap-notify: Button { text: @tr("Notifications") + ": " + (root.notification == 0 ? @tr("Off") : root.notification == 1 ? @tr("Normal") : @tr("Extra")); clicked => { root.setting("notify"); } }
             if root.cap-updates: Toggle { text: @tr("Check for updates on startup"); checked: root.updates; toggled => { root.setting("updates"); } }
-            Button { text: @tr("Language · English / Русский"); clicked => { root.setting("language"); } }
+            Button { text: @tr("Language") + ": " + root.language-label; clicked => { root.setting("language"); } }
             Text { text: @tr("About HellerTimer"); color: Theme.text; font-size: Theme.heading; }
-            Text { text: @tr("A little time. A little focus.") + "\nHellerTimer 0.1.0 · MIT"; color: Theme.muted; }
+            Text { text: @tr("A little time. A little focus.") + "\nHellerTimer " + root.version + " · MIT"; color: Theme.muted; }
             if root.update-available: Text { text: @tr("An update is available on GitHub"); color: Theme.primary; }
             Button { text: @tr("Source & releases"); clicked => { root.open-link(); } }
             AboutSlint { }

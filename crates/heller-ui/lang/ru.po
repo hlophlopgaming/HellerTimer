@@ -63,8 +63,8 @@ msgstr "ЧЧ:ММ"
 msgid "Hide"
 msgstr "Скрыть"
 
-msgid "Language · English / Русский"
-msgstr "Язык · English / Русский"
+msgid "Language"
+msgstr "Язык"
 
 msgid "Long break"
 msgstr "Длинный перерыв"

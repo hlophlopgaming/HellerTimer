@@ -38,6 +38,22 @@ pub trait Platform {
     }
     fn request_notifications(&self) {}
 }
+/// UI languages, in toggle order. Codes match the bundled `lang/*.po` files.
+pub const LANGUAGES: [&str; 9] = ["en", "ru", "de", "es", "fr", "pt", "it", "zh", "ja"];
+/// Autonym for a language code, shown in the Settings language button.
+pub fn language_label(code: &str) -> &'static str {
+    match code {
+        "ru" => "Русский",
+        "de" => "Deutsch",
+        "es" => "Español",
+        "fr" => "Français",
+        "pt" => "Português",
+        "it" => "Italiano",
+        "zh" => "中文",
+        "ja" => "日本語",
+        _ => "English",
+    }
+}
 pub struct App {
     pub window: MainWindow,
     pub core: RefCell<Core>,
@@ -95,6 +111,7 @@ impl App {
         app.window.set_cap_login(caps.login);
         app.window.set_cap_pin(caps.pin);
         app.window.set_cap_window_modes(caps.window_modes);
+        app.window.set_version(env!("CARGO_PKG_VERSION").into());
         let weak = Rc::downgrade(&app);
         app.window.on_external_command(move |n| {
             if let Some(a) = weak.upgrade() {
@@ -462,7 +479,11 @@ impl App {
                 self.platform.request_notifications();
             }
             "language" => {
-                s.language = if s.language == "en" { "ru" } else { "en" }.into();
+                let next = LANGUAGES
+                    .iter()
+                    .position(|l| *l == s.language)
+                    .map_or(1, |i| (i + 1) % LANGUAGES.len());
+                s.language = LANGUAGES[next].into();
             }
             _ => {}
         }
@@ -638,6 +659,10 @@ impl App {
                 log::warn!("Translation: {e}");
             }
             self.language.replace(settings.language.clone());
+        }
+        let label = language_label(&settings.language);
+        if w.get_language_label().as_str() != label {
+            w.set_language_label(label.into());
         }
         self.platform.state_changed(&c);
     }

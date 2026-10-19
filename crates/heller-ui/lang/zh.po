@@ -1,0 +1,217 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh\n"
+
+msgid "A little time. A little focus."
+msgstr "一点时间，一点专注。"
+
+msgid "About"
+msgstr "关于"
+
+msgid "About HellerTimer"
+msgstr "关于 HellerTimer"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Always on top"
+msgstr "始终置顶"
+
+msgid "An update is available on GitHub"
+msgstr "GitHub 上有可用更新"
+
+msgid "Auto-start focus"
+msgstr "自动开始专注"
+
+msgid "Check for updates on startup"
+msgstr "启动时检查更新"
+
+msgid "Close to tray"
+msgstr "关闭到托盘"
+
+msgid "Config"
+msgstr "配置"
+
+msgid "Dark theme"
+msgstr "深色主题"
+
+msgid "Delete empty list"
+msgstr "删除空列表"
+
+msgid "Description · Enter to save"
+msgstr "描述 · 按回车保存"
+
+msgid "Enter saves edits · → moves to next list"
+msgstr "回车保存 · → 移到下一列表"
+
+msgid "Expand"
+msgstr "展开"
+
+msgid "Extra"
+msgstr "更多"
+
+msgid "Focus minutes"
+msgstr "专注分钟数"
+
+msgid "Fullscreen breaks"
+msgstr "全屏休息"
+
+msgid "HH:MM"
+msgstr "时:分"
+
+msgid "Hide"
+msgstr "隐藏"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Long break"
+msgstr "长休息"
+
+msgid "Long break minutes"
+msgstr "长休息分钟数"
+
+msgid "Mini"
+msgstr "迷你"
+
+msgid "Mini window"
+msgstr "迷你窗口"
+
+msgid "Minimize to tray"
+msgstr "最小化到托盘"
+
+msgid "Minutes"
+msgstr "分钟"
+
+msgid "Native title bar"
+msgstr "系统标题栏"
+
+msgid "New list"
+msgstr "新建列表"
+
+msgid "Normal"
+msgstr "正常"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Off"
+msgstr "关闭"
+
+msgid "On"
+msgstr "开启"
+
+msgid "One thing at a time."
+msgstr "一次只做一件事。"
+
+msgid "Open at login"
+msgstr "登录时启动"
+
+msgid "Pause"
+msgstr "暂停"
+
+msgid "Progress animation"
+msgstr "进度动画"
+
+msgid "Quit"
+msgstr "退出"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Restore defaults"
+msgstr "恢复默认"
+
+msgid "Round"
+msgstr "轮次"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Sessions per round"
+msgstr "每轮次数"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Short break"
+msgstr "短休息"
+
+msgid "Short break minutes"
+msgstr "短休息分钟数"
+
+msgid "Show / Hide"
+msgstr "显示 / 隐藏"
+
+msgid "Skip"
+msgstr "跳过"
+
+msgid "Sound"
+msgstr "声音"
+
+msgid "Source & releases"
+msgstr "源码与版本"
+
+msgid "Special break"
+msgstr "特殊休息"
+
+msgid "Special breaks · local time"
+msgstr "特殊休息 · 当地时间"
+
+msgid "Start"
+msgstr "开始"
+
+msgid "Start / Pause"
+msgstr "开始 / 暂停"
+
+msgid "Stay focused"
+msgstr "保持专注"
+
+msgid "Strict mode"
+msgstr "严格模式"
+
+msgid "Tasks"
+msgstr "任务"
+
+msgid "Time for a break"
+msgstr "该休息了"
+
+msgid "Time to focus"
+msgstr "该专注了"
+
+msgid "Timer"
+msgstr "计时器"
+
+msgid "Use HH:MM and 1–120 minutes"
+msgstr "使用时:分 和 1–120 分钟"
+
+msgid "Voice assistance"
+msgstr "语音提示"
+
+msgid "What needs doing?"
+msgstr "需要做什么？"
+
+msgid "Your rhythm"
+msgstr "你的节奏"
+
+msgid "Your timer is about to finish"
+msgstr "计时器即将结束"
+
+msgid "Theme"
+msgstr "主题"
+
+msgid "Light"
+msgstr "浅色"
+
+msgid "Dark"
+msgstr "深色"
+
+msgid "Paper"
+msgstr "纸张"
+
+msgid "Forest"
+msgstr "森林"
+
+msgid "Midnight"
+msgstr "午夜"
