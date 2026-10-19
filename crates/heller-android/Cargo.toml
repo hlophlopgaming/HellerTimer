@@ -1,0 +1,12 @@
+[package]
+name = "heller-android"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+[lib]
+crate-type = ["cdylib", "rlib"]
+[target.'cfg(target_os = "android")'.dependencies]
+heller-ui = { path = "../heller-ui" }
+heller-core = { path = "../heller-core" }
+slint = { workspace = true, features = ["backend-android-activity-06", "renderer-software"] }
+jni = { version = "0.21", default-features = false }

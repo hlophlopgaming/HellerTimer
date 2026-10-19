@@ -1,0 +1,13 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'io.github.hlophlopgaming.hellertimer'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'io.github.hlophlopgaming.HellerTimer'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0'
+    }
+    splits { abi { enable true; reset(); include 'arm64-v8a', 'armeabi-v7a', 'x86_64'; universalApk true } }
+}

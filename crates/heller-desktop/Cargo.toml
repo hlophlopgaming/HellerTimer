@@ -1,0 +1,32 @@
+[package]
+name = "heller-desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+[[bin]]
+name = "hellertimer"
+path = "src/main.rs"
+[features]
+femtovg = ["slint/renderer-femtovg"]
+[dependencies]
+heller-core = { path = "../heller-core" }
+heller-ui = { path = "../heller-ui" }
+slint = { workspace = true, features = ["backend-winit", "renderer-software", "unstable-winit-030", "system-tray"] }
+serde_json.workspace = true
+log.workspace = true
+directories = { version = "6", default-features = false }
+auto-launch = { version = "0.6", default-features = false }
+global-hotkey = { version = "0.7", default-features = false }
+single-instance = { version = "0.3", default-features = false }
+[build-dependencies]
+slint-build = { version = "=1.18.1", default-features = false, features = ["compat-1-18"] }
+
+[package.metadata.packager]
+product-name = "HellerTimer"
+identifier = "io.github.hlophlopgaming.HellerTimer"
+publisher = "hlophlopgaming"
+category = "Productivity"
+icons = ["../../assets/icon.png"]
+resources = ["../../LICENSE", "../../THIRD_PARTY.md", "../../assets/licenses/*"]
+license-file = "../../LICENSE"
+homepage = "https://hlophlopgaming.github.io/HellerTimer/"

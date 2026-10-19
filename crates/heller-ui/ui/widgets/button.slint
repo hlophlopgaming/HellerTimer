@@ -1,0 +1,18 @@
+import { Theme } from "../theme.slint";
+export component Button inherits Rectangle {
+    in property <string> text;
+    in property <bool> primary: false;
+    in property <bool> enabled: true;
+    callback clicked();
+    min-height: Theme.control;
+    min-width: Theme.icon-width;
+    border-radius: Theme.radius;
+    background: primary ? Theme.primary : touch.has-hover ? Theme.border : Theme.card;
+    opacity: enabled ? 1 : 0.4;
+    accessible-role: button;
+    accessible-label: text;
+    accessible-action-default => { if enabled { root.clicked(); } }
+    Text { text: root.text; color: Theme.text; font-size: Theme.font; horizontal-alignment: center; vertical-alignment: center; }
+    touch := TouchArea { enabled: root.enabled; clicked => { root.clicked(); } }
+    focus := FocusScope { key-pressed(event) => { if (event.text == " " || event.text == "\n") && root.enabled { root.clicked(); return accept; } return reject; } }
+}

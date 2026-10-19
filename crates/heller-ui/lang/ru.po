@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ru\n"
+
+msgid "A little time. A little focus."
+msgstr "Немного времени. Немного фокуса."
+
+msgid "About"
+msgstr "О программе"
+
+msgid "About HellerTimer"
+msgstr "О HellerTimer"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Always on top"
+msgstr "Поверх окон"
+
+msgid "An update is available on GitHub"
+msgstr "На GitHub доступно обновление"
+
+msgid "Auto-start focus"
+msgstr "Автостарт фокуса"
+
+msgid "Check for updates on startup"
+msgstr "Проверять обновления при запуске"
+
+msgid "Close to tray"
+msgstr "Закрывать в трей"
+
+msgid "Config"
+msgstr "Конфигурация"
+
+msgid "Dark theme"
+msgstr "Тёмная тема"
+
+msgid "Delete empty list"
+msgstr "Удалить пустой список"
+
+msgid "Description · Enter to save"
+msgstr "Описание · Enter для сохранения"
+
+msgid "Enter saves edits · → moves to next list"
+msgstr "Enter сохраняет · → в следующий список"
+
+msgid "Expand"
+msgstr "Развернуть"
+
+msgid "Extra"
+msgstr "Расширенные"
+
+msgid "Focus minutes"
+msgstr "Фокус, минуты"
+
+msgid "Fullscreen breaks"
+msgstr "Полноэкранные перерывы"
+
+msgid "HH:MM"
+msgstr "ЧЧ:ММ"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Language · English / Русский"
+msgstr "Язык · English / Русский"
+
+msgid "Long break"
+msgstr "Длинный перерыв"
+
+msgid "Long break minutes"
+msgstr "Длинный перерыв, минуты"
+
+msgid "Mini"
+msgstr "Мини"
+
+msgid "Mini window"
+msgstr "Мини-окно"
+
+msgid "Minimize to tray"
+msgstr "Сворачивать в трей"
+
+msgid "Minutes"
+msgstr "Минуты"
+
+msgid "Native title bar"
+msgstr "Системный заголовок"
+
+msgid "New list"
+msgstr "Новый список"
+
+msgid "Normal"
+msgstr "Обычные"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Off"
+msgstr "Выкл."
+
+msgid "On"
+msgstr "Вкл."
+
+msgid "One thing at a time."
+msgstr "Одно дело за раз."
+
+msgid "Open at login"
+msgstr "Автозапуск"
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Progress animation"
+msgstr "Анимация прогресса"
+
+msgid "Quit"
+msgstr "Выход"
+
+msgid "Reset"
+msgstr "Сброс"
+
+msgid "Restore defaults"
+msgstr "Восстановить настройки"
+
+msgid "Round"
+msgstr "Раунд"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Sessions per round"
+msgstr "Сессий за раунд"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Short break"
+msgstr "Короткий перерыв"
+
+msgid "Short break minutes"
+msgstr "Короткий перерыв, минуты"
+
+msgid "Show / Hide"
+msgstr "Показать / Скрыть"
+
+msgid "Skip"
+msgstr "Пропустить"
+
+msgid "Sound"
+msgstr "Звук"
+
+msgid "Source & releases"
+msgstr "Код и загрузки"
+
+msgid "Special break"
+msgstr "Особый перерыв"
+
+msgid "Special breaks · local time"
+msgstr "Особые перерывы · местное время"
+
+msgid "Start"
+msgstr "Старт"
+
+msgid "Start / Pause"
+msgstr "Старт / Пауза"
+
+msgid "Stay focused"
+msgstr "Время фокуса"
+
+msgid "Strict mode"
+msgstr "Строгий режим"
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Time for a break"
+msgstr "Время для перерыва"
+
+msgid "Time to focus"
+msgstr "Время сосредоточиться"
+
+msgid "Timer"
+msgstr "Таймер"
+
+msgid "Use HH:MM and 1–120 minutes"
+msgstr "Введите ЧЧ:ММ и 1–120 минут"
+
+msgid "Voice assistance"
+msgstr "Голосовые подсказки"
+
+msgid "What needs doing?"
+msgstr "Что нужно сделать?"
+
+msgid "Your rhythm"
+msgstr "Ваш ритм"
+
+msgid "Your timer is about to finish"
+msgstr "Таймер скоро завершится"

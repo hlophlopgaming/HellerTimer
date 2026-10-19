@@ -1,0 +1,9 @@
+/target/
+/dist/
+**/build/
+**/.gradle/
+**/jniLibs/
+bench/results/
+!bench/results/*.json
+__pycache__/
+site/app/

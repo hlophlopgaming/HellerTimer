@@ -1,0 +1,13 @@
+import { Theme } from "../theme.slint";
+export component TextField inherits Rectangle {
+    in-out property <string> text <=> input.text;
+    in property <string> placeholder;
+    callback accepted(string);
+    min-height: Theme.control;
+    background: Theme.card;
+    border-radius: Theme.radius;
+    border-width: Theme.hairline;
+    border-color: input.has-focus ? Theme.primary : Theme.border;
+    input := TextInput { x: Theme.gap; width: parent.width - 2 * Theme.gap; height: parent.height; color: Theme.text; font-size: Theme.font; vertical-alignment: center; single-line: true; accepted => { root.accepted(self.text); } }
+    if root.text == "": Text { x: Theme.gap; text: root.placeholder; color: Theme.muted; vertical-alignment: center; }
+}

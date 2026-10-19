@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "A little time. A little focus."
+msgstr "A little time. A little focus."
+
+msgid "About"
+msgstr "About"
+
+msgid "About HellerTimer"
+msgstr "About HellerTimer"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "Always on top"
+msgstr "Always on top"
+
+msgid "An update is available on GitHub"
+msgstr "An update is available on GitHub"
+
+msgid "Auto-start focus"
+msgstr "Auto-start focus"
+
+msgid "Check for updates on startup"
+msgstr "Check for updates on startup"
+
+msgid "Close to tray"
+msgstr "Close to tray"
+
+msgid "Config"
+msgstr "Config"
+
+msgid "Dark theme"
+msgstr "Dark theme"
+
+msgid "Delete empty list"
+msgstr "Delete empty list"
+
+msgid "Description · Enter to save"
+msgstr "Description · Enter to save"
+
+msgid "Enter saves edits · → moves to next list"
+msgstr "Enter saves edits · → moves to next list"
+
+msgid "Expand"
+msgstr "Expand"
+
+msgid "Extra"
+msgstr "Extra"
+
+msgid "Focus minutes"
+msgstr "Focus minutes"
+
+msgid "Fullscreen breaks"
+msgstr "Fullscreen breaks"
+
+msgid "HH:MM"
+msgstr "HH:MM"
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "Language · English / Русский"
+msgstr "Language · English / Русский"
+
+msgid "Long break"
+msgstr "Long break"
+
+msgid "Long break minutes"
+msgstr "Long break minutes"
+
+msgid "Mini"
+msgstr "Mini"
+
+msgid "Mini window"
+msgstr "Mini window"
+
+msgid "Minimize to tray"
+msgstr "Minimize to tray"
+
+msgid "Minutes"
+msgstr "Minutes"
+
+msgid "Native title bar"
+msgstr "Native title bar"
+
+msgid "New list"
+msgstr "New list"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Off"
+msgstr "Off"
+
+msgid "On"
+msgstr "On"
+
+msgid "One thing at a time."
+msgstr "One thing at a time."
+
+msgid "Open at login"
+msgstr "Open at login"
+
+msgid "Pause"
+msgstr "Pause"
+
+msgid "Progress animation"
+msgstr "Progress animation"
+
+msgid "Quit"
+msgstr "Quit"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Restore defaults"
+msgstr "Restore defaults"
+
+msgid "Round"
+msgstr "Round"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Sessions per round"
+msgstr "Sessions per round"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Short break"
+msgstr "Short break"
+
+msgid "Short break minutes"
+msgstr "Short break minutes"
+
+msgid "Show / Hide"
+msgstr "Show / Hide"
+
+msgid "Skip"
+msgstr "Skip"
+
+msgid "Sound"
+msgstr "Sound"
+
+msgid "Source & releases"
+msgstr "Source & releases"
+
+msgid "Special break"
+msgstr "Special break"
+
+msgid "Special breaks · local time"
+msgstr "Special breaks · local time"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Start / Pause"
+msgstr "Start / Pause"
+
+msgid "Stay focused"
+msgstr "Stay focused"
+
+msgid "Strict mode"
+msgstr "Strict mode"
+
+msgid "Tasks"
+msgstr "Tasks"
+
+msgid "Time for a break"
+msgstr "Time for a break"
+
+msgid "Time to focus"
+msgstr "Time to focus"
+
+msgid "Timer"
+msgstr "Timer"
+
+msgid "Use HH:MM and 1–120 minutes"
+msgstr "Use HH:MM and 1–120 minutes"
+
+msgid "Voice assistance"
+msgstr "Voice assistance"
+
+msgid "What needs doing?"
+msgstr "What needs doing?"
+
+msgid "Your rhythm"
+msgstr "Your rhythm"
+
+msgid "Your timer is about to finish"
+msgstr "Your timer is about to finish"

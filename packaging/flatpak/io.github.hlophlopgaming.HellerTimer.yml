@@ -1,0 +1,25 @@
+app-id: io.github.hlophlopgaming.HellerTimer
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+command: hellertimer
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --socket=pulseaudio
+  - --talk-name=org.kde.StatusNotifierWatcher
+modules:
+  - name: hellertimer
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 hellertimer /app/bin/hellertimer
+      - install -Dm644 hellertimer.desktop /app/share/applications/io.github.hlophlopgaming.HellerTimer.desktop
+      - install -Dm644 icon.png /app/share/icons/hicolor/256x256/apps/io.github.hlophlopgaming.HellerTimer.png
+    sources:
+      - type: file
+        path: ../../target/release/hellertimer
+      - type: file
+        path: ../hellertimer.desktop
+      - type: file
+        path: ../../assets/icon.png

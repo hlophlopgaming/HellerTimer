@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=HellerTimer
+Comment=A little time. A little focus.
+Exec=hellertimer
+Icon=io.github.hlophlopgaming.HellerTimer
+Type=Application
+Categories=Utility;Office;
+StartupWMClass=hellertimer

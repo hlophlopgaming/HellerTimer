@@ -1,0 +1,16 @@
+export component Tray inherits SystemTrayIcon {
+    in-out property <image> progress-icon: @image-url("../../../assets/icon.png");
+    icon: progress-icon;
+    tooltip: "HellerTimer";
+    callback action(int);
+    clicked => { root.action(0); }
+    Menu {
+        MenuItem { title: @tr("Show / Hide"); activated => { root.action(0); } }
+        MenuItem { title: @tr("Mini window"); activated => { root.action(1); } }
+        MenuItem { title: @tr("Start / Pause"); activated => { root.action(2); } }
+        MenuItem { title: @tr("Skip"); activated => { root.action(3); } }
+        MenuItem { title: @tr("About"); activated => { root.action(4); } }
+        MenuSeparator {}
+        MenuItem { title: @tr("Quit"); activated => { root.action(5); } }
+    }
+}

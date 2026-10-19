@@ -1,0 +1,23 @@
+[workspace]
+members = ["crates/*", "xtask"]
+resolver = "2"
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+[workspace.dependencies]
+serde = { version = "1", default-features = false, features = ["derive", "std"] }
+serde_json = { version = "1", default-features = false, features = ["std"] }
+log = { version = "0.4", default-features = false }
+slint = { version = "=1.18.1", default-features = false, features = ["std", "compat-1-18", "accessibility"] }
+[profile.dev]
+debug = 0
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+[profile.release-web]
+inherits = "release"
+opt-level = "z"

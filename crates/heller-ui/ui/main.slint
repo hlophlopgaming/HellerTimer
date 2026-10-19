@@ -1,0 +1,205 @@
+import "../../../assets/fonts/NotoSans-Regular.ttf";
+import { AboutSlint, ScrollView } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+import { Button } from "widgets/button.slint";
+import { TextField } from "widgets/text-field.slint";
+import { Toggle } from "widgets/toggle.slint";
+import { RingProgress } from "widgets/ring-progress.slint";
+export { Theme }
+export struct SpecialRow { time: string, duration: string }
+export struct TaskRow { title: string, description: string, done: bool }
+export component MainWindow inherits Window {
+    title: "HellerTimer";
+    out property <string> message-warning: @tr("Your timer is about to finish");
+    out property <string> message-focus: @tr("Time to focus");
+    out property <string> message-break: @tr("Time for a break");
+    preferred-width: mini ? Theme.mini-width : Theme.window-width;
+    preferred-height: mini ? Theme.mini-height : Theme.window-height;
+    background: Theme.background;
+    default-font-size: Theme.font;
+    default-font-family: Theme.font-family;
+    icon: @image-url("../../../assets/icon.png");
+    in-out property <bool> update-available: false;
+    in-out property <bool> native-titlebar: true;
+    in-out property <bool> minimize-tray: false;
+    no-frame: !native-titlebar || mini;
+    in-out property <bool> mini: false;
+    in-out property <bool> dark: true;
+    in-out property <bool> pinned: false;
+    in-out property <bool> running: false;
+    in-out property <bool> locked: false;
+    in-out property <bool> strict: false;
+    in-out property <bool> auto-start: false;
+    in-out property <bool> sound: true;
+    in-out property <bool> voice: false;
+    in-out property <bool> animation: false;
+    in-out property <bool> fullscreen-breaks: false;
+    in-out property <bool> close-tray: false;
+    in-out property <bool> login: false;
+    in-out property <bool> cap-updates: false;
+    in-out property <bool> updates: true;
+    in-out property <int> config-error: 0;
+    in-out property <[SpecialRow]> special-breaks;
+    in-out property <bool> cap-tray: false;
+    in-out property <bool> cap-notify: false;
+    in-out property <bool> cap-audio: false;
+    in-out property <bool> cap-voice: false;
+    in-out property <bool> cap-login: false;
+    in-out property <bool> cap-pin: false;
+    in-out property <int> notification: 1;
+    in-out property <int> page: 2;
+    in-out property <int> phase: 0;
+    in-out property <int> round: 1;
+    in-out property <int> rounds: 4;
+    in-out property <int> focus-minutes: 25;
+    in-out property <int> short-minutes: 5;
+    in-out property <int> long-minutes: 15;
+    in-out property <int> list-index: 0;
+    in-out property <string> list-title;
+    in-out property <string> time-text: "25:00";
+    in-out property <[TaskRow]> tasks;
+    in-out property <float> progress: 0;
+    in-out property <bool> break-overlay: false;
+    property <string> phase-name: phase == 0 ? @tr("Stay focused") : phase == 1 ? @tr("Short break") : phase == 2 ? @tr("Long break") : @tr("Special break");
+    property <color> accent: phase == 0 ? Theme.primary : phase == 1 ? Theme.green : Theme.yellow;
+    always-on-top: pinned || mini;
+
+    callback command(int);
+    callback external-command(int);
+    callback setting(string);
+    callback configure(int, int);
+    callback add-task(string);
+    callback task-action(int, int, string);
+    callback list-action(int, string);
+    callback open-link();
+    callback hide-window();
+    callback close-window();
+    callback drag-window();
+    callback special(int, string, string);
+    VerticalLayout {
+        padding: root.mini ? Theme.gap : Theme.padding;
+        spacing: Theme.gap;
+        if !root.mini: HorizontalLayout {
+            Rectangle { horizontal-stretch: 1; background: Theme.transparent;
+                Text { text: "HellerTimer"; color: Theme.text; font-size: Theme.heading; font-weight: 600; vertical-alignment: center; }
+                TouchArea { moved => { if self.pressed { root.drag-window(); } } }
+            }
+            if !root.native-titlebar: Button { text: "×"; clicked => { root.close-window(); } }
+            Button { text: @tr("Mini"); clicked => { root.setting("mini"); } }
+            if root.cap-tray: Button { text: @tr("Hide"); clicked => { root.hide-window(); } }
+        }
+        if !root.mini: HorizontalLayout {
+            spacing: Theme.small-gap;
+            Button { text: @tr("Tasks"); primary: root.page == 0; clicked => { root.page = 0; } }
+            Button { text: @tr("Config"); primary: root.page == 1; clicked => { root.page = 1; } }
+            Button { text: @tr("Timer"); primary: root.page == 2; clicked => { root.page = 2; } }
+            Button { text: @tr("Settings"); primary: root.page == 3; clicked => { root.page = 3; } }
+        }
+        if root.mini: HorizontalLayout {
+            Rectangle { horizontal-stretch: 1; background: Theme.transparent;
+                Text { text: root.time-text; color: root.accent; font-size: Theme.heading; vertical-alignment: center; }
+                TouchArea { moved => { if self.pressed { root.drag-window(); } } double-clicked => { root.setting("mini"); } }
+            }
+            Button { text: root.running ? @tr("Pause") : @tr("Start"); enabled: !root.locked; clicked => { root.command(0); } }
+            Button { text: @tr("Expand"); clicked => { root.setting("mini"); } }
+        }
+        if !root.mini && root.page == 2: VerticalLayout {
+            spacing: Theme.gap;
+            Rectangle { vertical-stretch: 1; background: Theme.transparent;
+                ring := RingProgress { width: Theme.ring; height: Theme.ring; x: (parent.width - self.width) / 2; y: (parent.height - self.height) / 2; progress: root.progress; animation: root.animation; accent: root.accent; }
+                VerticalLayout { x: ring.x; y: ring.y; width: ring.width; height: ring.height; alignment: center; spacing: Theme.gap;
+                    Text { text: root.phase-name; color: root.accent; horizontal-alignment: center; }
+                    Text { text: root.time-text; font-size: Theme.clock; color: Theme.text; horizontal-alignment: center; }
+                    Text { text: @tr("Round") + " " + root.round + " / " + root.rounds; color: Theme.muted; horizontal-alignment: center; }
+                }
+            }
+            HorizontalLayout { spacing: Theme.gap;
+                Button { text: @tr("Reset"); enabled: !root.locked; clicked => { root.command(1); } }
+                Button { text: root.running ? @tr("Pause") : @tr("Start"); primary: true; enabled: !root.locked || !root.running; clicked => { root.command(0); } }
+                Button { text: @tr("Skip"); enabled: !root.locked; clicked => { root.command(2); } }
+            }
+            Text { text: @tr("One thing at a time."); color: Theme.muted; horizontal-alignment: center; }
+        }
+        if !root.mini && root.page == 0: VerticalLayout {
+            spacing: Theme.gap;
+            HorizontalLayout {
+                Button { text: "‹"; clicked => { root.list-action(-1, ""); } }
+                TextField { text: root.list-title; accepted(t) => { root.list-action(3,t); } }
+                Button { text: "›"; clicked => { root.list-action(1, ""); } }
+            }
+            HorizontalLayout { spacing: Theme.gap;
+                new-list := TextField { placeholder: @tr("New list"); accepted(t) => { root.list-action(2,t); self.text = ""; } }
+                Button { text: @tr("Add"); clicked => { root.list-action(2,new-list.text); new-list.text = ""; } }
+            }
+            ScrollView { VerticalLayout { spacing: Theme.gap;
+                for task[i] in root.tasks: VerticalLayout {
+                    HorizontalLayout { spacing: Theme.small-gap;
+                        Button { text: task.done ? "✓" : "○"; clicked => { root.task-action(i,0,""); } }
+                        TextField { text: task.title; accepted(t) => { root.task-action(i,1,t); } }
+                        Button { text: "↑"; clicked => { root.task-action(i,3,""); } }
+                        Button { text: "↓"; clicked => { root.task-action(i,4,""); } }
+                        Button { text: "→"; clicked => { root.task-action(i,5,""); } }
+                        Button { text: "×"; clicked => { root.task-action(i,2,""); } }
+                    }
+                    TextField { text: task.description; placeholder: @tr("Description · Enter to save"); accepted(t) => { root.task-action(i,6,t); } }
+                }
+            } }
+            HorizontalLayout { spacing: Theme.gap;
+                new-task := TextField { placeholder: @tr("What needs doing?"); accepted(t) => { root.add-task(t); self.text = ""; } }
+                Button { text: @tr("Add"); primary: true; clicked => { root.add-task(new-task.text); new-task.text = ""; } }
+            }
+            Button { text: @tr("Delete empty list"); clicked => { root.list-action(4,""); } }
+            Text { text: @tr("Enter saves edits · → moves to next list"); color: Theme.muted; }
+        }
+        if !root.mini && root.page == 1: ScrollView { VerticalLayout {
+            spacing: Theme.gap;
+            Text { text: @tr("Your rhythm"); color: Theme.text; font-size: Theme.heading; }
+            for label[i] in [@tr("Focus minutes"), @tr("Short break minutes"), @tr("Long break minutes"), @tr("Sessions per round")]: HorizontalLayout {
+                Text { text: label; color: Theme.text; vertical-alignment: center; horizontal-stretch: 1; }
+                Button { text: "−"; clicked => { root.configure(i,-1); } }
+                Text { text: "" + (i == 0 ? root.focus-minutes : i == 1 ? root.short-minutes : i == 2 ? root.long-minutes : root.rounds); color: Theme.text; width: Theme.numeric-width; horizontal-alignment: center; vertical-alignment: center; }
+                Button { text: "+"; clicked => { root.configure(i,1); } }
+            }
+            Text { text: @tr("Special breaks · local time"); color: Theme.text; }
+            for slot[n] in root.special-breaks: HorizontalLayout { spacing: Theme.small-gap;
+                at := TextField { text: slot.time; placeholder: @tr("HH:MM"); }
+                duration := TextField { text: slot.duration; placeholder: @tr("Minutes"); }
+                Button { text: @tr("Save"); clicked => { root.special(n, at.text, duration.text); } }
+                Button { text: "×"; clicked => { root.special(n,"",""); } }
+            }
+            if root.config-error == 1: Text { text: @tr("Use HH:MM and 1–120 minutes"); color: Theme.yellow; }
+            Button { text: @tr("Restore defaults"); clicked => { root.configure(4,0); } }
+        } }
+        if !root.mini && root.page == 3: ScrollView { VerticalLayout {
+            spacing: Theme.gap;
+            Toggle { text: @tr("Dark theme"); checked: root.dark; toggled => { root.setting("dark"); } }
+            Toggle { text: @tr("Strict mode"); checked: root.strict; toggled => { root.setting("strict"); } }
+            Toggle { text: @tr("Auto-start focus"); checked: root.auto-start; toggled => { root.setting("auto"); } }
+            Toggle { text: @tr("Progress animation"); checked: root.animation; toggled => { root.setting("animation"); } }
+            if root.cap-audio: Toggle { text: @tr("Sound"); checked: root.sound; toggled => { root.setting("sound"); } }
+            if root.cap-voice: Toggle { text: @tr("Voice assistance"); checked: root.voice; toggled => { root.setting("voice"); } }
+            if root.cap-pin: Toggle { text: @tr("Always on top"); checked: root.pinned; toggled => { root.setting("pin"); } }
+            Toggle { text: @tr("Fullscreen breaks"); checked: root.fullscreen-breaks; toggled => { root.setting("fullscreen"); } }
+            if root.cap-tray: Toggle { text: @tr("Minimize to tray"); checked: root.minimize-tray; toggled => { root.setting("minimize"); } }
+            if root.cap-pin: Toggle { text: @tr("Native title bar"); checked: root.native-titlebar; toggled => { root.setting("titlebar"); } }
+            if root.cap-tray: Toggle { text: @tr("Close to tray"); checked: root.close-tray; toggled => { root.setting("tray"); } }
+            if root.cap-login: Toggle { text: @tr("Open at login"); checked: root.login; toggled => { root.setting("login"); } }
+            if root.cap-notify: Button { text: @tr("Notifications") + ": " + (root.notification == 0 ? @tr("Off") : root.notification == 1 ? @tr("Normal") : @tr("Extra")); clicked => { root.setting("notify"); } }
+            if root.cap-updates: Toggle { text: @tr("Check for updates on startup"); checked: root.updates; toggled => { root.setting("updates"); } }
+            Button { text: @tr("Language · English / Русский"); clicked => { root.setting("language"); } }
+            Text { text: @tr("About HellerTimer"); color: Theme.text; font-size: Theme.heading; }
+            Text { text: @tr("A little time. A little focus.") + "\nHellerTimer 0.1.0 · MIT"; color: Theme.muted; }
+            if root.update-available: Text { text: @tr("An update is available on GitHub"); color: Theme.primary; }
+            Button { text: @tr("Source & releases"); clicked => { root.open-link(); } }
+            AboutSlint { }
+        } }
+    }
+    if root.break-overlay: Rectangle {
+        background: Theme.background;
+        VerticalLayout { padding: Theme.padding; alignment: center; spacing: Theme.padding;
+            Text { text: root.phase-name; color: root.accent; font-size: Theme.heading; horizontal-alignment: center; }
+            Text { text: root.time-text; color: Theme.text; font-size: Theme.clock; horizontal-alignment: center; }
+            if !root.locked: Button { text: @tr("Skip"); clicked => { root.command(2); } }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+import { Theme } from "../theme.slint";
+export component RingProgress inherits Rectangle {
+    in-out property <float> progress;
+    in property <bool> animation;
+    animate progress { duration: root.animation ? 1s : 0ms; easing: linear; }
+    in property <color> accent: Theme.primary;
+    background: Theme.transparent;
+    Path { width: parent.width; height: parent.height; viewbox-width: 100; viewbox-height: 100; stroke: Theme.border; stroke-width: Theme.stroke; fill: Theme.transparent;
+        MoveTo { x:50; y:2; } ArcTo { x:50; y:98; radius-x:48; radius-y:48; } ArcTo { x:50; y:2; radius-x:48; radius-y:48; }
+    }
+    Path { width: parent.width; height: parent.height; viewbox-width: 100; viewbox-height: 100; stroke: root.accent; stroke-width: Theme.stroke; fill: Theme.transparent;
+        MoveTo { x:50; y:2; }
+        ArcTo { x:50 + 48 * sin(root.progress * 359.99deg); y:50 - 48 * cos(root.progress * 359.99deg); radius-x:48; radius-y:48; large-arc: root.progress > 0.5; sweep: true; }
+    }
+}

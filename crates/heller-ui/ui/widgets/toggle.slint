@@ -1,0 +1,10 @@
+import { Theme } from "../theme.slint";
+import { Button } from "button.slint";
+export component Toggle inherits HorizontalLayout {
+    in property <string> text;
+    in property <bool> checked;
+    callback toggled();
+    spacing: Theme.gap;
+    Text { text: root.text; color: Theme.text; vertical-alignment: center; font-size: Theme.font; horizontal-stretch: 1; }
+    Button { text: root.checked ? @tr("On") : @tr("Off"); primary: root.checked; width: Theme.switch-width; clicked => { root.toggled(); } }
+}
