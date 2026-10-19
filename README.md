@@ -5,7 +5,7 @@
 
 A native Pomodoro timer written in **Rust + Slint**, inspired by [Pomatez](https://github.com/zidoro/pomatez). Named for Joseph Heller, author of *Catch-22*.
 
-**Early development release.** The timer and desktop UI work; full Pomatez parity and the performance budgets in [PLAN.md](PLAN.md) are not yet verified. The web version is a demo; desktop is the main application.
+The timer and desktop UI work; full Pomatez parity and the performance budgets in [PLAN.md](PLAN.md) are not yet verified. The web version is a demo; desktop is the main application.
 
 [Download releases](https://github.com/hlophlopgaming/HellerTimer/releases) · [Website & web demo](https://hlophlopgaming.github.io/HellerTimer/) · [Build checks](https://github.com/hlophlopgaming/HellerTimer/actions)
 
@@ -103,7 +103,7 @@ cargo run -p heller-desktop --example ui-smoke -- --frameless
 
 These scenarios send pointer events, exercise every mini-window entry point and restoration (including hidden windows), timer controls, tasks, configuration, all themes, Russian and persistence. They use an in-memory platform and never modify your user data. Raw RGBA screenshots and dimensions go to `$HELLER_SCREENSHOT_DIR` or a temporary `hellertimer-ui-smoke` directory. CI runs the same scenarios under Xvfb.
 
-The last Android command requires an SDK/JDK even for `cargo check`. Long packaging and release jobs run in CI. Push a `v*` tag to build release packages; the workflow publishes a prerelease only when all platform jobs succeed. GitHub Pages deploys from `main` using Actions. No PR is required.
+The last Android command requires an SDK/JDK even for `cargo check`. Long packaging and release jobs run in CI. Push a `v*` tag to build release packages; the workflow immediately publishes a regular release marked Latest, then attaches packages when all platform builds succeed. GitHub Pages deploys from `main` using Actions. No PR is required.
 
 ## Performance
 
