@@ -12,6 +12,7 @@ HellerTimer source code is MIT licensed. Dependencies retain their own licenses.
 * **global-hotkey** — MIT OR Apache-2.0; desktop shortcuts without polling.
 * **single-instance** — MIT; native process-instance lock.
 * **wasm-bindgen / js-sys / web-sys** — MIT OR Apache-2.0; browser entry point, local storage, visibility and notifications.
+* **console_error_panic_hook** — MIT OR Apache-2.0; renders WASM panics as readable console errors in the web demo.
 * **jni** — MIT OR Apache-2.0; Android Java storage and alarm bridge.
 
 Use `cargo tree --locked` for exact transitive versions in Cargo.lock. No additional third-party assets are embedded in the site.
