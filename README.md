@@ -55,7 +55,7 @@ cargo build --release -p heller-desktop --features femtovg
 Requires stable Rust 1.92+ and platform libraries for Slint/winit. Ubuntu:
 
 ```
-sudo apt install libxkbcommon-dev libwayland-dev libfontconfig1-dev libx11-xcb-dev
+sudo apt install libxkbcommon-dev libxkbcommon-x11-dev libwayland-dev libfontconfig1-dev libx11-xcb-dev
 ```
 
 Optional Linux integration utilities: `pulseaudio-utils` (`paplay`, also works with PipeWire's PulseAudio compatibility server), `libnotify-bin`, `curl`, and `busctl` from systemd. There is no GTK dependency.
