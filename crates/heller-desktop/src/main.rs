@@ -477,16 +477,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             });
         });
     }
-    let w = app.window.as_weak();
-    app.window.on_drag_window(move || {
-        if let Some(w) = w.upgrade() {
-            w.window().with_winit_window(|w| {
-                if let Err(e) = w.drag_window() {
-                    log::warn!("Drag window: {e}");
-                }
-            });
-        }
-    });
     if args.iter().any(|s| s == "--animation") {
         app.core.borrow_mut().settings.progress_animation = true;
     }

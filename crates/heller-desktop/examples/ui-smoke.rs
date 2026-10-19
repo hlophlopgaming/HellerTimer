@@ -64,6 +64,58 @@ fn click(app: &App, x: f32, y: f32) {
         app.window.window().dispatch_event(event);
     }
 }
+fn drag_releases_pointer(app: &App) {
+    use slint::platform::{PointerEventButton, WindowEvent, WindowEventDispatchResult};
+    let window = app.window.window();
+    let point = |x, y| slint::LogicalPosition::new(x, y);
+    window.dispatch_event(WindowEvent::PointerPressed {
+        position: point(40.0, 28.0),
+        button: PointerEventButton::Left,
+    });
+    window.dispatch_event(WindowEvent::PointerMoved {
+        position: point(65.0, 28.0),
+    });
+    // The compositor owns the native drag and can consume its button-release event.
+    // Slint must already have relinquished its own grab after handing off the move.
+    let result = window
+        .dispatch_event_with_result(WindowEvent::PointerMoved {
+            position: point(400.0, 200.0),
+        })
+        .unwrap();
+    window.dispatch_event(WindowEvent::PointerReleased {
+        position: point(400.0, 200.0),
+        button: PointerEventButton::Left,
+    });
+    assert_eq!(
+        result,
+        WindowEventDispatchResult::Rejected,
+        "drag handle retained the pointer grab after native handoff"
+    );
+    click(app, 173.0, 31.0);
+    assert!(app.window.get_running());
+    click(app, 173.0, 31.0);
+    assert!(!app.window.get_running());
+    window.dispatch_event(WindowEvent::PointerPressed {
+        position: point(40.0, 28.0),
+        button: PointerEventButton::Left,
+    });
+    window.dispatch_event(WindowEvent::PointerMoved {
+        position: point(65.0, 28.0),
+    });
+    window.dispatch_event(WindowEvent::PointerReleased {
+        position: point(65.0, 28.0),
+        button: PointerEventButton::Left,
+    });
+    assert_eq!(
+        window
+            .dispatch_event_with_result(WindowEvent::PointerMoved {
+                position: point(400.0, 200.0)
+            })
+            .unwrap(),
+        WindowEventDispatchResult::Rejected,
+        "pointer stayed captured after button release"
+    );
+}
 fn geometry(app: &App, mini: bool) -> Result<(), String> {
     let size = app
         .window
@@ -101,6 +153,7 @@ fn step(
                 1 => {
                     capture(&app, "mini-button")?;
                     geometry(&app, true)?;
+                    drag_releases_pointer(&app);
                     click(&app, 227.0, 31.0);
                     assert!(!app.window.get_mini());
                 }

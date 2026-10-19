@@ -76,7 +76,6 @@ export component MainWindow inherits Window {
     callback open-link();
     callback hide-window();
     callback close-window();
-    callback drag-window();
     callback special(int, string, string);
     VerticalLayout {
         padding: root.mini ? Theme.gap : Theme.padding;
@@ -84,7 +83,7 @@ export component MainWindow inherits Window {
         if !root.mini: HorizontalLayout {
             Rectangle { horizontal-stretch: 1; background: Theme.transparent;
                 Text { text: "HellerTimer"; color: Theme.text; font-size: Theme.heading; font-weight: 600; vertical-alignment: center; }
-                TouchArea { moved => { if self.pressed { root.drag-window(); } } }
+                WindowMoveArea { enabled: root.cap-window-modes; }
             }
             if !root.native-titlebar: Button { text: "×"; clicked => { root.close-window(); } }
             if root.cap-window-modes: Button { text: @tr("Mini"); clicked => { root.setting("mini"); } }
@@ -102,7 +101,10 @@ export component MainWindow inherits Window {
             HorizontalLayout { spacing: Theme.gap; height: Theme.control;
                 Rectangle { horizontal-stretch: 1; background: Theme.transparent;
                     Text { text: root.time-text; color: root.accent; font-size: Theme.mini-clock; vertical-alignment: center; }
-                    TouchArea { moved => { if self.pressed { root.drag-window(); } } double-clicked => { root.setting("mini"); } }
+                    WindowMoveArea {
+                        enabled: root.cap-window-modes;
+                        TouchArea { double-clicked => { root.setting("mini"); } }
+                    }
                 }
                 Button { width: Theme.icon-width; text: root.running ? "Ⅱ" : "▶"; label: root.running ? @tr("Pause") : @tr("Start"); enabled: !root.locked; clicked => { root.command(0); } }
                 Button { width: Theme.icon-width; text: "↗"; label: @tr("Expand"); clicked => { root.setting("mini"); } }

@@ -101,7 +101,7 @@ cargo run -p heller-desktop --example ui-smoke -- --start-mini
 cargo run -p heller-desktop --example ui-smoke -- --frameless
 ```
 
-These scenarios send pointer events, exercise every mini-window entry point and restoration (including hidden windows), timer controls, tasks, configuration, all themes, Russian and persistence. They use an in-memory platform and never modify your user data. Raw RGBA screenshots and dimensions go to `$HELLER_SCREENSHOT_DIR` or a temporary `hellertimer-ui-smoke` directory. CI runs the same scenarios under Xvfb.
+These scenarios send pointer events, exercise every mini-window entry point and restoration (including hidden windows), native-drag handoff and pointer release, timer controls, tasks, configuration, all themes, Russian and persistence. They use an in-memory platform and never modify your user data. Raw RGBA screenshots and dimensions go to `$HELLER_SCREENSHOT_DIR` or a temporary `hellertimer-ui-smoke` directory. CI runs the same scenarios under Xvfb.
 
 The last Android command requires an SDK/JDK even for `cargo check`. Long packaging and release jobs run in CI. Push a `v*` tag to build release packages; the workflow immediately publishes a regular release marked Latest, then attaches packages when all platform builds succeed. GitHub Pages deploys from `main` using Actions. No PR is required.
 
