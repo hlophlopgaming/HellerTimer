@@ -27,8 +27,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { runner: ubuntu-24.04, target: x86_64-unknown-linux-gnu, os: linux, arch: x86_64, formats: 'deb,appimage' }
-          - { runner: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, os: linux, arch: aarch64, formats: 'deb,appimage' }
+          - { runner: ubuntu-24.04, target: x86_64-unknown-linux-gnu, os: linux, arch: x86_64, formats: 'appimage' }
+          - { runner: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, os: linux, arch: aarch64, formats: 'appimage' }
           - { runner: windows-latest, target: x86_64-pc-windows-msvc, os: windows, arch: x86_64, formats: nsis }
           - { runner: windows-11-arm, target: aarch64-pc-windows-msvc, os: windows, arch: aarch64, formats: nsis }
           - { runner: macos-latest, target: aarch64-apple-darwin, os: macos, arch: aarch64, formats: dmg }
@@ -62,7 +62,7 @@ jobs:
           output = root / 'dist'
           output.mkdir(exist_ok=True)
           stem = f"HellerTimer-{os.environ['GITHUB_REF_NAME']}-{os.environ['PACKAGE_OS']}-{os.environ['PACKAGE_ARCH']}"
-          for ext in ('*.deb', '*.AppImage', '*.dmg', '*setup*.exe'):
+          for ext in ('*.AppImage', '*.dmg', '*setup*.exe'):
               for source in root.joinpath('target').rglob(ext):
                   shutil.copy2(source, output / (stem + source.suffix))
           binary = root / 'target' / os.environ['PACKAGE_TARGET'] / 'release' / ('hellertimer.exe' if os.environ['PACKAGE_OS'] == 'windows' else 'hellertimer')
@@ -81,53 +81,9 @@ jobs:
         with:
           name: desktop-${{ matrix.os }}-${{ matrix.arch }}
           path: dist/*
-  android:
-    runs-on: ubuntu-24.04
-    env:
-      ANDROID_PLATFORM: android-35
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-      - uses: android-actions/setup-android@v4
-      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;28.0.13004108'
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
-      - uses: Swatinem/rust-cache@v2
-      - run: cargo install cargo-ndk --locked
-      - run: cargo ndk -t arm64-v8a -t armeabi-v7a -t x86_64 -o crates/heller-android/android/app/src/main/jniLibs build -p heller-android --release --locked
-        env:
-          ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.13004108
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.11.1'
-      - run: gradle assembleDebug
-        working-directory: crates/heller-android/android
-      - uses: actions/upload-artifact@v4
-        with:
-          name: android
-          path: crates/heller-android/android/app/build/outputs/apk/debug/*.apk
-  web:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-      - uses: jetli/trunk-action@v0.5.0
-      - run: trunk build --release --public-url ./
-        working-directory: crates/heller-web
-      - run: cd crates/heller-web/dist && zip -r ../../../HellerTimer-web.zip .
-      - uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: HellerTimer-web.zip
   publish:
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [create-release, desktop, android, web]
+    needs: [create-release, desktop]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
