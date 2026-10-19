@@ -2,10 +2,13 @@
 
 [![Made with Slint](https://img.shields.io/badge/Made_with-Slint-007bc7)](https://slint.dev)
 [![Checks](https://github.com/hlophlopgaming/HellerTimer/actions/workflows/check.yml/badge.svg)](https://github.com/hlophlopgaming/HellerTimer/actions/workflows/check.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[English](README.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 A native Pomodoro timer written in **Rust + Slint**, inspired by [Pomatez](https://github.com/zidoro/pomatez). Named for Joseph Heller, author of *Catch-22*.
 
-The timer and desktop UI work; full Pomatez parity and the performance budgets in [PLAN.md](PLAN.md) are not yet verified. The web version is a demo; desktop is the main application.
+The timer and desktop UI work, and published measurements show the default renderer using a fraction of Pomatez's memory (see [Performance](#performance)). Full Pomatez parity is still in progress. The web version is a demo; desktop is the main application.
 
 [Download releases](https://github.com/hlophlopgaming/HellerTimer/releases) · [Website & web demo](https://hlophlopgaming.github.io/HellerTimer/) · [Build checks](https://github.com/hlophlopgaming/HellerTimer/actions)
 
@@ -107,11 +110,20 @@ The last Android command requires an SDK/JDK even for `cargo check`. Long packag
 
 ## Performance
 
-See [benchmark instructions](bench/README.md). Targets (not measured claims): ≤30 MiB visible PSS, ≤20 MiB tray PSS, near-zero hidden CPU, ≤250 ms startup. Both renderers must be compared against the full Pomatez process tree on the same machine.
+Measured on a desktop Linux host against Pomatez 1.11.0 (whole process tree, PSS private memory). See [benchmark instructions](bench/README.md). The [website](https://hlophlopgaming.github.io/HellerTimer/#footprint) renders the same data as a chart; a standalone [SVG chart](site/bench/benchmark.svg) is also generated.
 
 <!-- bench:start -->
-No comparable benchmark has been published yet.
+| Application | Scenario | Private MiB | CPU % |
+|---|---|---:|---:|
+| HellerTimer/software | idle-visible | 16.9 | 0.00 |
+| HellerTimer/femtovg | idle-visible | 51.9 | 0.00 |
+| HellerTimer/software | running-static | 17.3 | 0.07 |
+| HellerTimer/femtovg | running-static | 49.6 | 0.10 |
+| HellerTimer/software | mini | 15.9 | 0.00 |
+| Pomatez | idle-visible | 301.5 | 1.07 |
 <!-- bench:end -->
+
+Targets: ≤30 MiB visible PSS, ≤20 MiB tray PSS, near-zero hidden CPU, ≤250 ms startup. Both renderers are compared against the full Pomatez process tree on the same machine.
 
 The built-in Slint tray uses ksni on Linux; its internal dependencies are outside the pure timer core. Native audio helpers run only during effects and release the audio device when done. The mini mode reuses the main window. Visible progress interpolation is optional and disabled by default.
 
