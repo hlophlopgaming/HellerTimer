@@ -1,4 +1,6 @@
-use heller_core::{Core, Data, Effect, Input, Phase, RunState, SpecialBreak, Task, TaskList};
+use heller_core::{
+    ColorTheme, Core, Data, Effect, Input, Phase, RunState, SpecialBreak, Task, TaskList,
+};
 use slint::{ComponentHandle, ModelRc, VecModel};
 use std::{
     cell::{Cell, RefCell},
@@ -17,6 +19,7 @@ pub struct Caps {
     pub voice: bool,
     pub login: bool,
     pub pin: bool,
+    pub window_modes: bool,
 }
 pub trait Platform {
     fn load(&self) -> Option<String> {
@@ -46,6 +49,7 @@ pub struct App {
     pub visible: Cell<bool>,
     list: Cell<usize>,
     language: RefCell<String>,
+    normal_geometry: Cell<Option<(slint::PhysicalPosition, slint::PhysicalSize)>>,
 }
 macro_rules! set_changed {
     ($ui:expr, $get:ident, $set:ident, $value:expr) => {{
@@ -80,6 +84,7 @@ impl App {
             visible: Cell::new(true),
             list: Cell::new(0),
             language: RefCell::new(String::new()),
+            normal_geometry: Cell::new(None),
         });
         let caps = app.platform.capabilities();
         app.window.set_cap_updates(caps.updates);
@@ -89,6 +94,7 @@ impl App {
         app.window.set_cap_voice(caps.voice);
         app.window.set_cap_login(caps.login);
         app.window.set_cap_pin(caps.pin);
+        app.window.set_cap_window_modes(caps.window_modes);
         let weak = Rc::downgrade(&app);
         app.window.on_external_command(move |n| {
             if let Some(a) = weak.upgrade() {
@@ -114,7 +120,7 @@ impl App {
                     1 => a.dispatch(Input::Toggle),
                     2 => a.dispatch(Input::Skip),
                     3 => {
-                        a.window.set_mini(!a.window.get_mini());
+                        a.toggle_mini();
                         a.set_visible(true);
                     }
                     _ => a.set_visible(true),
@@ -129,6 +135,24 @@ impl App {
                     2 => Input::Skip,
                     _ => Input::Toggle,
                 });
+            }
+        });
+        let weak = Rc::downgrade(&app);
+        app.window.on_select_theme(move |index| {
+            if let Some(a) = weak.upgrade() {
+                if let Some(theme) = [
+                    ColorTheme::Light,
+                    ColorTheme::Dark,
+                    ColorTheme::Paper,
+                    ColorTheme::Forest,
+                    ColorTheme::Midnight,
+                ]
+                .get(index as usize)
+                {
+                    a.core.borrow_mut().settings.theme = *theme;
+                    a.persist();
+                    a.refresh();
+                }
             }
         });
         let weak = Rc::downgrade(&app);
@@ -339,6 +363,12 @@ impl App {
         self.arm();
     }
     pub fn set_visible(self: &Rc<Self>, visible: bool) {
+        if !visible && self.window.window().is_visible() && !self.window.get_mini() {
+            self.normal_geometry.set(Some((
+                self.window.window().position(),
+                self.window.window().size(),
+            )));
+        }
         self.visible.set(visible);
         self.core.borrow_mut().visible = visible;
         let result = if visible {
@@ -351,18 +381,58 @@ impl App {
         }
         self.dispatch(Input::Tick);
     }
+    pub fn toggle_mini(self: &Rc<Self>) {
+        let window = self.window.window();
+        let entering = !self.window.get_mini();
+        if entering {
+            if window.is_visible() {
+                self.normal_geometry
+                    .set(Some((window.position(), window.size())));
+            } else if self.normal_geometry.get().is_none() {
+                let theme = self.window.global::<Theme>();
+                let size =
+                    slint::LogicalSize::new(theme.get_window_width(), theme.get_window_height())
+                        .to_physical(window.scale_factor());
+                self.normal_geometry.set(Some((window.position(), size)));
+            }
+        } else {
+            let pos = window.position();
+            self.core.borrow_mut().settings.mini_window_pos = Some((pos.x, pos.y));
+        }
+        let shown = window.is_visible();
+        // Recreate the native surface so decorations and client size change together on Wayland.
+        if shown {
+            if let Err(e) = self.window.hide() {
+                log::error!("Hide while changing window mode: {e}");
+            }
+        }
+        self.window.set_mini(entering);
+        if entering {
+            let theme = self.window.global::<Theme>();
+            window.set_size(slint::LogicalSize::new(
+                theme.get_mini_width(),
+                theme.get_mini_height(),
+            ));
+        } else if let Some((_, size)) = self.normal_geometry.get() {
+            window.set_size(size);
+        }
+        if shown {
+            if let Err(e) = self.window.show() {
+                log::error!("Show after changing window mode: {e}");
+            }
+        }
+        if entering {
+            if let Some((x, y)) = self.core.borrow().settings.mini_window_pos {
+                window.set_position(slint::PhysicalPosition::new(x, y));
+            }
+        } else if let Some((pos, _)) = self.normal_geometry.get() {
+            window.set_position(pos);
+        }
+        self.persist();
+    }
     fn setting(self: &Rc<Self>, key: &str) {
         if key == "mini" {
-            if self.window.get_mini() {
-                let pos = self.window.window().position();
-                self.core.borrow_mut().settings.mini_window_pos = Some((pos.x, pos.y));
-            } else if let Some((x, y)) = self.core.borrow().settings.mini_window_pos {
-                self.window
-                    .window()
-                    .set_position(slint::PhysicalPosition::new(x, y));
-            }
-            self.window.set_mini(!self.window.get_mini());
-            self.persist();
+            self.toggle_mini();
             return;
         }
         let mut core = self.core.borrow_mut();
@@ -371,7 +441,6 @@ impl App {
             "updates" => s.check_updates = !s.check_updates,
             "titlebar" => s.native_titlebar = !s.native_titlebar,
             "minimize" => s.minimize_to_tray = !s.minimize_to_tray,
-            "dark" => s.dark = !s.dark,
             "strict" => {
                 if !s.strict_mode || core.state == RunState::Idle {
                     core.settings.strict_mode = !core.settings.strict_mode;
@@ -533,9 +602,10 @@ impl App {
             settings.minimize_to_tray
         );
         set_changed!(w, get_animation, set_animation, settings.progress_animation);
-        set_changed!(w, get_dark, set_dark, settings.dark);
-        if w.global::<Theme>().get_dark() != settings.dark {
-            w.global::<Theme>().set_dark(settings.dark);
+        let scheme = settings.theme as i32;
+        set_changed!(w, get_color_theme, set_color_theme, scheme);
+        if w.global::<Theme>().get_scheme() != scheme {
+            w.global::<Theme>().set_scheme(scheme);
         }
         set_changed!(w, get_strict, set_strict, settings.strict_mode);
         set_changed!(w, get_auto_start, set_auto_start, settings.auto_start_work);

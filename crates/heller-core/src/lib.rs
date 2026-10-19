@@ -44,6 +44,17 @@ pub struct SpecialBreak {
     pub minute_of_day: u16,
     pub duration_minutes: u16,
 }
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ColorTheme {
+    Light,
+    #[default]
+    Dark,
+    Paper,
+    Forest,
+    Midnight,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Settings {
@@ -53,7 +64,7 @@ pub struct Settings {
     pub sound_enabled: bool,
     pub voice_assistance: bool,
     pub notification: u8,
-    pub dark: bool,
+    pub theme: ColorTheme,
     pub language: String,
     pub always_on_top: bool,
     pub fullscreen_breaks: bool,
@@ -73,7 +84,7 @@ impl Default for Settings {
             sound_enabled: true,
             voice_assistance: false,
             notification: 1,
-            dark: true,
+            theme: ColorTheme::Dark,
             language: "en".into(),
             always_on_top: false,
             fullscreen_breaks: false,
@@ -108,7 +119,7 @@ pub struct Data {
 impl Default for Data {
     fn default() -> Self {
         Self {
-            version: 1,
+            version: 2,
             config: Config::default(),
             settings: Settings::default(),
             lists: vec![TaskList {
@@ -120,10 +131,34 @@ impl Default for Data {
 }
 impl Data {
     pub fn decode(json: &str) -> Result<Self, String> {
-        let mut data: Self = serde_json::from_str(json).map_err(|e| e.to_string())?;
-        if data.version != 1 {
-            return Err("Unsupported data version".into());
+        let mut value: serde_json::Value = serde_json::from_str(json).map_err(|e| e.to_string())?;
+        if !value.is_object() {
+            return Err("Saved data must be an object".into());
         }
+        if value
+            .get("settings")
+            .is_some_and(|s| !s.is_null() && !s.is_object())
+        {
+            return Err("Saved settings must be an object".into());
+        }
+        let version = match value.get("version") {
+            None => 1,
+            Some(v) => v.as_u64().ok_or("Invalid data version")?,
+        };
+        match version {
+            1 => {
+                let theme = if value["settings"]["dark"].as_bool() == Some(false) {
+                    "light"
+                } else {
+                    "dark"
+                };
+                value["settings"]["theme"] = theme.into();
+                value["version"] = 2.into();
+            }
+            2 => {}
+            _ => return Err("Unsupported data version".into()),
+        }
+        let mut data: Self = serde_json::from_value(value).map_err(|e| e.to_string())?;
         data.config.validate();
         data.settings.notification = data.settings.notification.min(2);
         if data.lists.is_empty() {

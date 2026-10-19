@@ -29,6 +29,7 @@ impl Desktop {
             voice: cfg!(any(target_os = "macos", target_os = "windows")),
             login: true,
             pin: std::env::var_os("WAYLAND_DISPLAY").is_none(),
+            window_modes: true,
         };
         #[cfg(target_os = "linux")]
         {
@@ -296,15 +297,7 @@ fn newer_version(tag: &str, current: &str) -> bool {
         _ => false,
     }
 }
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn versions() {
-        assert!(super::newer_version("v0.2.0", "0.1.0"));
-        assert!(!super::newer_version("v0.1.0", "0.1.0"));
-        assert!(!super::newer_version("v0.2.0-beta", "0.1.0"));
-    }
-}
+
 fn run(command: &str, args: &[&str]) {
     match std::process::Command::new(command).args(args).status() {
         Ok(s) if s.success() => {}
@@ -408,7 +401,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             match n {
                 0 => a.set_visible(!a.visible.get()),
                 1 => {
-                    a.window.set_mini(!a.window.get_mini());
+                    a.toggle_mini();
                     a.set_visible(true);
                 }
                 2 => a.dispatch(heller_core::Input::Toggle),
@@ -514,7 +507,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     if args.iter().any(|s| s == "--mini") {
-        app.window.set_mini(true);
+        app.toggle_mini();
     }
     if args.iter().any(|s| s == "--start") {
         app.dispatch(heller_core::Input::Start);
@@ -524,7 +517,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         app.set_visible(true);
     }
-    slint::run_event_loop()?;
+    slint::run_event_loop_until_quit()?;
     app.flush();
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn versions() {
+        assert!(super::newer_version("v0.2.0", "0.1.0"));
+        assert!(!super::newer_version("v0.1.0", "0.1.0"));
+        assert!(!super::newer_version("v0.2.0-beta", "0.1.0"));
+    }
 }

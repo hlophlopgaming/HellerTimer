@@ -1,15 +1,18 @@
 // Palette from Pomatez app/renderer/src/styles/themes.ts (MIT).
 export global Theme {
-    in-out property <bool> dark: true;
-    out property <color> background: dark ? #111d25 : #ffffff;
-    out property <color> surface: dark ? #1c2830 : #fafafa;
-    out property <color> card: dark ? #2a363e : #f3f3f3;
-    out property <color> text: dark ? #e3e4e5 : #212121;
-    out property <color> muted: dark ? #a7abae : #666666;
-    out property <color> border: dark ? #283138 : #e6e6e6;
-    out property <color> primary: dark ? #0098f7 : #007bc7;
-    out property <color> green: dark ? #07b583 : #00855f;
-    out property <color> yellow: dark ? #d48d0a : #a66703;
+    // 0 Light, 1 Dark (Pomatez), 2 Paper, 3 Forest, 4 Midnight.
+    in-out property <int> scheme: 1;
+    out property <bool> dark: scheme == 1 || scheme == 3 || scheme == 4;
+    out property <color> background: scheme == 2 ? #f4eddf : scheme == 3 ? #14251f : scheme == 4 ? #171625 : dark ? #111d25 : #ffffff;
+    out property <color> surface: scheme == 2 ? #eee4d2 : scheme == 3 ? #1c3128 : scheme == 4 ? #211f34 : dark ? #1c2830 : #fafafa;
+    out property <color> card: scheme == 2 ? #e7dcc8 : scheme == 3 ? #294235 : scheme == 4 ? #302c48 : dark ? #2a363e : #f3f3f3;
+    out property <color> text: scheme == 2 ? #342c23 : scheme == 3 ? #e2ece3 : scheme == 4 ? #ede8fa : dark ? #e3e4e5 : #212121;
+    out property <color> muted: scheme == 2 ? #70604a : scheme == 3 ? #a9c0ac : scheme == 4 ? #b6abcf : dark ? #a7abae : #666666;
+    out property <color> border: scheme == 2 ? #d3c5ad : scheme == 3 ? #355442 : scheme == 4 ? #443c60 : dark ? #283138 : #e6e6e6;
+    out property <color> primary: scheme == 2 ? #87551c : scheme == 3 ? #8ccc9c : scheme == 4 ? #b59afa : dark ? #0098f7 : #007bc7;
+    out property <color> primary-text: scheme == 3 ? #102719 : scheme == 4 ? #201334 : scheme == 1 ? #071c2b : #ffffff;
+    out property <color> green: scheme == 2 ? #3c6d43 : scheme == 3 ? #82d8bd : scheme == 4 ? #88d8c0 : dark ? #07b583 : #00855f;
+    out property <color> yellow: scheme == 2 ? #865519 : scheme == 3 ? #e5c27d : scheme == 4 ? #e7bc85 : dark ? #d48d0a : #a66703;
     out property <color> transparent: #00000000;
     out property <length> radius: 8px;
     out property <length> gap: 12px;
@@ -21,8 +24,9 @@ export global Theme {
     out property <length> control: 38px;
     out property <length> window-width: 480px;
     out property <length> window-height: 640px;
-    out property <length> mini-width: 240px;
-    out property <length> mini-height: 86px;
+    out property <length> mini-width: 260px;
+    out property <length> mini-height: 72px;
+    out property <length> mini-clock: 28px;
     out property <length> ring: 270px;
     out property <length> stroke: 1.5px;
     out property <length> small-gap: 4px;

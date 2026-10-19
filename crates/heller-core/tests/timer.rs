@@ -122,7 +122,7 @@ fn special_interrupts_without_changing_round() {
 }
 #[test]
 fn data_validation_and_task_move() {
-    assert!(Data::decode("{\"version\":2}").is_err());
+    assert!(Data::decode("{\"version\":3}").is_err());
     assert!(Data::decode("bad").is_err());
     let d = Data::decode("{\"version\":1,\"config\":{\"focus_minutes\":0}}").unwrap();
     assert_eq!(d.config.focus_minutes, 1);
@@ -165,4 +165,35 @@ fn years_of_sleep_are_bounded_and_correct() {
     assert_eq!(t.phase, Phase::Focus);
     assert_eq!(t.round, 1);
     assert_eq!(t.seconds(c.0), 1490);
+}
+
+#[test]
+fn theme_migration_preserves_legacy_preferences_and_tasks() {
+    for (dark, theme) in [(true, ColorTheme::Dark), (false, ColorTheme::Light)] {
+        let json = format!(
+            r#"{{"version":1,"settings":{{"dark":{dark},"language":"ru"}},"lists":[{{"title":"Work","tasks":[{{"title":"Keep me","description":"Notes","done":true}}]}}]}}"#
+        );
+        let data = Data::decode(&json).unwrap();
+        assert_eq!(data.version, 2);
+        assert_eq!(data.settings.theme, theme);
+        assert_eq!(data.settings.language, "ru");
+        assert_eq!(data.lists[0].tasks[0].title, "Keep me");
+        assert!(data.lists[0].tasks[0].done);
+    }
+    let mut data = Data::default();
+    data.settings.theme = ColorTheme::Forest;
+    let saved = serde_json::to_string(&data).unwrap();
+    assert_eq!(
+        Data::decode(&saved).unwrap().settings.theme,
+        ColorTheme::Forest
+    );
+    for invalid in [
+        r#"{"version":1,"settings":42}"#,
+        r#"{"version":"oops"}"#,
+        "[]",
+        "null",
+        r#"{"version":2,"settings":{"theme":"invalid"}}"#,
+    ] {
+        assert!(Data::decode(invalid).is_err());
+    }
 }

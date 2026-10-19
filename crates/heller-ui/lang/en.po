@@ -197,3 +197,21 @@ msgstr "Your rhythm"
 
 msgid "Your timer is about to finish"
 msgstr "Your timer is about to finish"
+
+msgid "Theme"
+msgstr "Theme"
+
+msgid "Light"
+msgstr "Light"
+
+msgid "Dark"
+msgstr "Dark"
+
+msgid "Paper"
+msgstr "Paper"
+
+msgid "Forest"
+msgstr "Forest"
+
+msgid "Midnight"
+msgstr "Midnight"

@@ -1,6 +1,7 @@
 import { Theme } from "../theme.slint";
 export component Button inherits Rectangle {
     in property <string> text;
+    in property <string> label: text;
     in property <bool> primary: false;
     in property <bool> enabled: true;
     callback clicked();
@@ -10,9 +11,9 @@ export component Button inherits Rectangle {
     background: primary ? Theme.primary : touch.has-hover ? Theme.border : Theme.card;
     opacity: enabled ? 1 : 0.4;
     accessible-role: button;
-    accessible-label: text;
+    accessible-label: label;
     accessible-action-default => { if enabled { root.clicked(); } }
-    Text { text: root.text; color: Theme.text; font-size: Theme.font; horizontal-alignment: center; vertical-alignment: center; }
-    touch := TouchArea { enabled: root.enabled; clicked => { root.clicked(); } }
+    Text { text: root.text; color: root.primary ? Theme.primary-text : Theme.text; font-size: Theme.font; horizontal-alignment: center; vertical-alignment: center; }
     focus := FocusScope { key-pressed(event) => { if (event.text == " " || event.text == "\n") && root.enabled { root.clicked(); return accept; } return reject; } }
+    touch := TouchArea { enabled: root.enabled; clicked => { focus.focus(); root.clicked(); } }
 }

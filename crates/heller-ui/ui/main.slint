@@ -24,7 +24,7 @@ export component MainWindow inherits Window {
     in-out property <bool> minimize-tray: false;
     no-frame: !native-titlebar || mini;
     in-out property <bool> mini: false;
-    in-out property <bool> dark: true;
+    in-out property <int> color-theme: 1;
     in-out property <bool> pinned: false;
     in-out property <bool> running: false;
     in-out property <bool> locked: false;
@@ -46,6 +46,7 @@ export component MainWindow inherits Window {
     in-out property <bool> cap-voice: false;
     in-out property <bool> cap-login: false;
     in-out property <bool> cap-pin: false;
+    in-out property <bool> cap-window-modes: false;
     in-out property <int> notification: 1;
     in-out property <int> page: 2;
     in-out property <int> phase: 0;
@@ -67,6 +68,7 @@ export component MainWindow inherits Window {
     callback command(int);
     callback external-command(int);
     callback setting(string);
+    callback select-theme(int);
     callback configure(int, int);
     callback add-task(string);
     callback task-action(int, int, string);
@@ -85,7 +87,7 @@ export component MainWindow inherits Window {
                 TouchArea { moved => { if self.pressed { root.drag-window(); } } }
             }
             if !root.native-titlebar: Button { text: "×"; clicked => { root.close-window(); } }
-            Button { text: @tr("Mini"); clicked => { root.setting("mini"); } }
+            if root.cap-window-modes: Button { text: @tr("Mini"); clicked => { root.setting("mini"); } }
             if root.cap-tray: Button { text: @tr("Hide"); clicked => { root.hide-window(); } }
         }
         if !root.mini: HorizontalLayout {
@@ -95,13 +97,19 @@ export component MainWindow inherits Window {
             Button { text: @tr("Timer"); primary: root.page == 2; clicked => { root.page = 2; } }
             Button { text: @tr("Settings"); primary: root.page == 3; clicked => { root.page = 3; } }
         }
-        if root.mini: HorizontalLayout {
-            Rectangle { horizontal-stretch: 1; background: Theme.transparent;
-                Text { text: root.time-text; color: root.accent; font-size: Theme.heading; vertical-alignment: center; }
-                TouchArea { moved => { if self.pressed { root.drag-window(); } } double-clicked => { root.setting("mini"); } }
+        if root.mini: VerticalLayout {
+            spacing: Theme.small-gap;
+            HorizontalLayout { spacing: Theme.gap; height: Theme.control;
+                Rectangle { horizontal-stretch: 1; background: Theme.transparent;
+                    Text { text: root.time-text; color: root.accent; font-size: Theme.mini-clock; vertical-alignment: center; }
+                    TouchArea { moved => { if self.pressed { root.drag-window(); } } double-clicked => { root.setting("mini"); } }
+                }
+                Button { width: Theme.icon-width; text: root.running ? "Ⅱ" : "▶"; label: root.running ? @tr("Pause") : @tr("Start"); enabled: !root.locked; clicked => { root.command(0); } }
+                Button { width: Theme.icon-width; text: "↗"; label: @tr("Expand"); clicked => { root.setting("mini"); } }
             }
-            Button { text: root.running ? @tr("Pause") : @tr("Start"); enabled: !root.locked; clicked => { root.command(0); } }
-            Button { text: @tr("Expand"); clicked => { root.setting("mini"); } }
+            Rectangle { height: Theme.hairline; background: Theme.border;
+                Rectangle { height: parent.height; width: parent.width * root.progress; background: root.accent; }
+            }
         }
         if !root.mini && root.page == 2: VerticalLayout {
             spacing: Theme.gap;
@@ -131,7 +139,7 @@ export component MainWindow inherits Window {
                 new-list := TextField { placeholder: @tr("New list"); accepted(t) => { root.list-action(2,t); self.text = ""; } }
                 Button { text: @tr("Add"); clicked => { root.list-action(2,new-list.text); new-list.text = ""; } }
             }
-            ScrollView { VerticalLayout { spacing: Theme.gap;
+            ScrollView { VerticalLayout { spacing: Theme.gap; alignment: start;
                 for task[i] in root.tasks: VerticalLayout {
                     HorizontalLayout { spacing: Theme.small-gap;
                         Button { text: task.done ? "✓" : "○"; clicked => { root.task-action(i,0,""); } }
@@ -172,7 +180,12 @@ export component MainWindow inherits Window {
         } }
         if !root.mini && root.page == 3: ScrollView { VerticalLayout {
             spacing: Theme.gap;
-            Toggle { text: @tr("Dark theme"); checked: root.dark; toggled => { root.setting("dark"); } }
+            Text { text: @tr("Theme"); color: Theme.text; }
+            HorizontalLayout { spacing: Theme.small-gap;
+                for name[i] in [@tr("Light"), @tr("Dark"), @tr("Paper"), @tr("Forest"), @tr("Midnight")]: Button {
+                    text: name; primary: root.color-theme == i; clicked => { root.select-theme(i); }
+                }
+            }
             Toggle { text: @tr("Strict mode"); checked: root.strict; toggled => { root.setting("strict"); } }
             Toggle { text: @tr("Auto-start focus"); checked: root.auto-start; toggled => { root.setting("auto"); } }
             Toggle { text: @tr("Progress animation"); checked: root.animation; toggled => { root.setting("animation"); } }

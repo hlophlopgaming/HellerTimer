@@ -10,10 +10,15 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy,rustfmt
-      - run: sudo apt-get update && sudo apt-get install -y libxkbcommon-dev libwayland-dev libfontconfig1-dev libx11-xcb-dev
+      - run: sudo apt-get update && sudo apt-get install -y libxkbcommon-dev libwayland-dev libfontconfig1-dev libx11-xcb-dev xvfb
       - uses: Swatinem/rust-cache@v2
       - run: cargo fmt --all -- --check
       - run: cargo check --workspace --locked
       - run: cargo clippy --workspace --locked -- -D warnings
       - run: cargo test -p heller-core --locked
+      - name: Exercise the real UI with a virtual display
+        run: |
+          xvfb-run -a cargo run --locked -p heller-desktop --example ui-smoke
+          xvfb-run -a cargo run --locked -p heller-desktop --example ui-smoke -- --start-mini
+          xvfb-run -a cargo run --locked -p heller-desktop --example ui-smoke -- --frameless
       - run: python bench/bench.py --help && python -m unittest discover -s bench
